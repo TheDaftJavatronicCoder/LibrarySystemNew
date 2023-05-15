@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.AdminController">
+   <children>
+      <VBox prefHeight="476.0" prefWidth="180.0" spacing="5.0" style="-fx-background-color: #263f73;">
+         <children>
+            <Label alignment="CENTER" prefHeight="77.0" prefWidth="167.0" text="Admin page" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="31.0" />
+               </font>
+            </Label>
+            <Line endX="69.67156982421875" endY="1.1715729236602783" startX="-100.0" stroke="WHITE" strokeWidth="4.0" />
+            <Button fx:id="addObjectButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="Add object" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="activeLoansButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: transparent;" text="Active loans" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="14.0" />
+               </font></Button>
+            <Button fx:id="feesButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="184.0" style="-fx-background-color: transparent;" text="Fees" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="startPageButton" mnemonicParsing="false" onAction="#switchToStartPage" prefHeight="50.0" prefWidth="169.0" style="-fx-background-color: transparent;" text="Start page" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="14.0" />
+               </font></Button>
+         </children>
+      </VBox>
+      <VBox layoutX="185.0" layoutY="177.0" prefHeight="285.0" prefWidth="673.0">
+         <children>
+            <StackPane>
+               <children>
+                  <GridPane fx:id="gpFees" prefHeight="285.0" prefWidth="618.0" style="-fx-background-color: white;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.0" minWidth="10.0" prefWidth="430.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0">
+                           <children>
+                              <TextField prefHeight="26.0" prefWidth="376.0" promptText="Insert value....." style="-fx-border-color: #263f73; -fx-background-color: white;" />
+                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #263f73; -fx-border-color: #263f73;" text="Search for loans with fees" textFill="#263f73">
+                                 <font>
+                                    <Font name="Big Caslon Medium" size="17.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="gpAddObject" prefHeight="285.0" prefWidth="618.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.0" minWidth="10.0" prefWidth="430.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TableView prefHeight="256.0" prefWidth="673.0" GridPane.rowIndex="1">
+                           <columns>
+                              <TableColumn prefWidth="75.0" text="ISBN" />
+                              <TableColumn prefWidth="75.0" text="Name" />
+                              <TableColumn prefWidth="88.0" text="Realising year" />
+                              <TableColumn prefWidth="62.0" text="Genre" />
+                              <TableColumn prefWidth="75.0" text="Category" />
+                              <TableColumn prefWidth="75.0" text="Author" />
+                              <TableColumn prefWidth="65.0" text="Shelf" />
+                              <TableColumn prefWidth="85.0" text="Copies" />
+                              <TableColumn prefWidth="75.0" text="Barcode" />
+                           </columns>
+                        </TableView>
+                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0">
+                           <children>
+                              <TextField prefHeight="26.0" prefWidth="376.0" promptText="Insert value....." style="-fx-border-color: #263f73; -fx-background-color: white;" />
+                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #263f73; -fx-border-color: #263f73;" text="Add object" textFill="#263f73">
+                                 <font>
+                                    <Font name="Big Caslon Medium" size="17.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="gpActiveLoans" prefHeight="285.0" prefWidth="618.0" style="-fx-background-color: white;">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.0" minWidth="10.0" prefWidth="430.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0">
+                           <children>
+                              <TextField prefHeight="26.0" prefWidth="376.0" promptText="Search for loans" style="-fx-border-color: #263f73; -fx-background-color: white;" />
+                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #263f73; -fx-border-color: #263f73;" text="Search" textFill="#263f73">
+                                 <font>
+                                    <Font name="Big Caslon Medium" size="17.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+      <Pane fx:id="pnlStatus" layoutX="178.0" prefHeight="173.0" prefWidth="699.0" style="-fx-background-color: #263f73;">
+         <children>
+            <Label fx:id="lblStatus" alignment="CENTER" layoutX="213.0" layoutY="62.0" prefHeight="50.0" prefWidth="283.0" text="Add object" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="36.0" />
+               </font>
+            </Label>
+            <Line endX="-10.5" endY="168.0" layoutX="14.0" layoutY="7.0" startX="-10.5" startY="-7.0" stroke="WHITE" strokeWidth="4.0" />
+         </children></Pane>
+   </children>
+</AnchorPane>
