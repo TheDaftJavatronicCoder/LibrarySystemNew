@@ -55,7 +55,7 @@
                            <children>
                               <TextField fx:id="usernameTextField" promptText="Username" />
                               <PasswordField fx:id="passwordTextField" promptText="Password" />
-                              <Button fx:id="loginButton3" mnemonicParsing="false" prefHeight="40.0" prefWidth="260.0" style="-fx-background-color: white;" text="Login" textFill="#263f73" />
+                              <Button fx:id="loginButton3" mnemonicParsing="false" onAction="#continueToLoan" prefHeight="40.0" prefWidth="260.0" style="-fx-background-color: white;" text="Login" textFill="#263f73" />
                            </children>
                         </VBox>
                      </children>

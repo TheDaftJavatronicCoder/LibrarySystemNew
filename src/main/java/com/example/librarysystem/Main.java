@@ -15,7 +15,7 @@ public class Main extends Application {
 
 
 
-            Parent root = FXMLLoader.load(getClass().getResource("loan.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("startpage.fxml"));
 
             Scene scene = new Scene(root);
             stage.setTitle("LTU Library System");

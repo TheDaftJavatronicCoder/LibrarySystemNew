@@ -9,10 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -22,7 +20,20 @@ import java.util.ResourceBundle;
 public class LoanController implements Initializable {
 
     @FXML
+    private GridPane gpLoan;
+
+    @FXML
+    private GridPane gpReturnLoan;
+
+    @FXML
+    private Label labelStatus;
+
+    @FXML
     private Button loanPageMangeLoanButton;
+
+    @FXML
+    private Pane panelStatus;
+
     @FXML
     private Button returnLoanMangeLoanButton;
 
@@ -30,10 +41,10 @@ public class LoanController implements Initializable {
     private Button startPageButton2;
 
     @FXML
-    private Label labelStatus;
+    private TextField usernameTextField;
 
     @FXML
-    private Pane panelStatus;
+    private TextField usernameTextField1;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -44,14 +55,14 @@ public class LoanController implements Initializable {
         if (event.getSource() == loanPageMangeLoanButton) {
 
             labelStatus.setText("Loan");
-            panelStatus.setBackground(new Background(new BackgroundFill(Color.rgb(43,63,90),CornerRadii.EMPTY, Insets.EMPTY)));
-
+            panelStatus.setBackground(new Background(new BackgroundFill(Color.rgb(38, 63, 115),CornerRadii.EMPTY, Insets.EMPTY)));
+gpLoan.toFront();
             //handle startPageButton
         } else if (event.getSource() == returnLoanMangeLoanButton) {
 
             labelStatus.setText("Return Loan");
             panelStatus.setBackground(new Background(new BackgroundFill(Color.rgb(60,20,99),CornerRadii.EMPTY, Insets.EMPTY)));
-
+gpReturnLoan.toFront();
             //handle addObjectButton
         }
     }

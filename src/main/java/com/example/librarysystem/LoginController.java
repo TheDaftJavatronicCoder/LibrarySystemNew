@@ -73,4 +73,13 @@ public class LoginController {
 
     }
 
+    public void continueToLoan()  throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loan.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) loginButton3.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
+
+    }
+
     }
