@@ -114,16 +114,7 @@
                       <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0">
-                           <children>
-                              <TextField prefHeight="26.0" prefWidth="376.0" promptText="Search for loans" style="-fx-border-color: #263f73; -fx-background-color: white;" />
-                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #263f73; -fx-border-color: #263f73;" text="Search" textFill="#263f73">
-                                 <font>
-                                    <Font name="Big Caslon Medium" size="17.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
+                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0" />
                      </children>
                   </GridPane>
                </children>
@@ -132,7 +123,7 @@
       </VBox>
       <Pane fx:id="pnlStatus" layoutX="178.0" prefHeight="173.0" prefWidth="699.0" style="-fx-background-color: #263f73;">
          <children>
-            <Label fx:id="lblStatus" alignment="CENTER" layoutX="213.0" layoutY="62.0" prefHeight="50.0" prefWidth="283.0" text="Add object" textFill="WHITE">
+            <Label fx:id="lblStatus" alignment="CENTER" layoutX="213.0" layoutY="62.0" prefHeight="50.0" prefWidth="283.0" text="Welcome" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="36.0" />
                </font>
