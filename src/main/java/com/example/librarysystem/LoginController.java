@@ -57,7 +57,6 @@ public class LoginController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-
     @FXML
     protected void onLoginClick(ActionEvent e) throws SQLException, IOException {
         String creditNam = usernameTextField.getText();

@@ -3,6 +3,7 @@ package com.example.librarysystem;
 import java.sql.*;
 
 public class DatabaseConnection {
+
     static String name = "";
     static String bookNames = "";
     static Connection conn = null;
