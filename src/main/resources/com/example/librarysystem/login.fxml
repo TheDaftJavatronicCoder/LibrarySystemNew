@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="534.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="534.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.LoginController">
    <children>
       <VBox layoutX="265.0" layoutY="103.0" prefHeight="328.0" prefWidth="216.0">
          <children>
@@ -21,14 +29,14 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="7.0">
                            <children>
-                              <TextField fx:id="usernameTextField1" promptText="First name" />
-                              <TextField promptText="Last name" />
-                              <TextField promptText="Email " />
-                              <TextField promptText="Adress" />
-                              <TextField promptText="Phone number" />
-                              <TextField promptText="Username" />
-                              <TextField promptText="Age" />
-                              <TextField promptText="Public,Student, Scientist or Library Worker?  " />
+                              <TextField fx:id="firstnameTextField" promptText="First name" />
+                              <TextField fx:id="lastnameTextField" promptText="Last name" />
+                              <TextField fx:id="emailTextField" promptText="Email " />
+                              <TextField fx:id="phonenumberTextField" promptText="Adress" />
+                              <TextField fx:id="adressTextField" promptText="Phone number" />
+                              <TextField fx:id="ageTextField" promptText="Username" />
+                              <TextField fx:id="roleTextField" promptText="Age" />
+                              <TextField fx:id="usernameTextField1" promptText="Public,Student, Scientist or Library Worker?  " />
                               <PasswordField fx:id="passwordTextField1" promptText="Password" />
                               <Button fx:id="createAccountButton2" mnemonicParsing="false" prefHeight="20.0" prefWidth="252.0" style="-fx-background-color: white;" text="Create" textFill="#263f73" />
                            </children>
@@ -80,6 +88,7 @@
             <Label prefHeight="147.0" prefWidth="210.0" />
             <Button fx:id="createAccountButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: white;" text="Create account" textFill="#263f73" />
             <Button fx:id="returnToStartpage3Button" mnemonicParsing="false" onAction="#returnToStartPage" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: white;" text="Return" textFill="#263f73" />
+            <Button fx:id="createAccountButton1" mnemonicParsing="false" onAction="#createClass" prefHeight="40.0" prefWidth="210.0" style="-fx-background-color: white;" text="Test" textFill="#263f73" />
          </children>
       </VBox>
    </children>
