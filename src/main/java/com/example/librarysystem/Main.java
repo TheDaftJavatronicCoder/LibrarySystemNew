@@ -7,11 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, SQLException {
 
 
 
@@ -21,6 +22,8 @@ public class Main extends Application {
             stage.setTitle("LTU Library System");
             stage.setScene(scene);
             stage.show();
+            DatabaseConnection databaseConnection = new DatabaseConnection();
+            databaseConnection.connect();
         }
 
 
