@@ -112,6 +112,8 @@
                     <rowConstraints>
                       <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
+
+	private WebElement webElement;
                     </rowConstraints>
                      <children>
                         <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0" />
