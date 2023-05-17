@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController {
@@ -55,6 +56,24 @@ public class LoginController {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
+
+
+    @FXML
+    protected void onLoginClick(ActionEvent e) throws SQLException, IOException {
+        String creditNam = usernameTextField.getText();
+        String creditPass = passwordTextField.getText();
+
+        if(DatabaseConnection.signIn(creditNam, creditPass)){
+            System.out.println("Login successful");
+            continueToLoan();
+        }
+        else{
+            System.out.println("Login failed");
+
+        }
+    }
+
+
 
     @FXML
     private void handleClicks(ActionEvent event)  {
