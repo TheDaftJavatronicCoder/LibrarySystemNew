@@ -28,8 +28,11 @@ public class StartPageController implements Initializable {
     private Button manageLoanButton;
 
     @FXML
+    private Button searchButton;
+
+    @FXML
     protected void onAdminButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adminpage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adminlogin.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);
         Stage currentStage = (Stage) adminPageButton.getScene().getWindow();
@@ -45,6 +48,14 @@ public class StartPageController implements Initializable {
         Stage currentStage = (Stage) manageLoanButton.getScene().getWindow();
         currentStage.setScene(myPagesScene);
     }
+    public void onSearch() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("search.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) searchButton.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
+    }
+
     }
 
 

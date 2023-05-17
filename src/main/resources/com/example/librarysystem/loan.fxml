@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.LoanController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="696.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.LoanController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="135.0" spacing="10.0" style="-fx-background-color: #263f73;">
+      <VBox prefHeight="460.0" prefWidth="135.0" spacing="10.0" style="-fx-background-color: #263f73;">
          <children>
             <Label contentDisplay="CENTER" text="Manage loans" textFill="WHITE">
                <font>
@@ -38,9 +38,9 @@
             </Button>
          </children>
       </VBox>
-      <Pane fx:id="panelStatus" layoutX="135.0" prefHeight="139.0" prefWidth="466.0" style="-fx-background-color: #263f73;">
+      <Pane fx:id="panelStatus" layoutX="135.0" prefHeight="139.0" prefWidth="562.0" style="-fx-background-color: #263f73;">
          <children>
-            <Label fx:id="labelStatus" layoutX="181.0" layoutY="61.0" text="Loans" textFill="WHITE">
+            <Label fx:id="labelStatus" layoutX="241.0" layoutY="55.0" text="Loans" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="23.0" />
                </font>
@@ -48,7 +48,7 @@
          </children>
       </Pane>
       <StackPane layoutX="142.0" layoutY="151.89999389648438" />
-      <VBox layoutX="135.0" layoutY="139.0" prefHeight="261.0" prefWidth="428.0">
+      <VBox layoutX="146.0" layoutY="152.0" prefHeight="297.0" prefWidth="536.0">
          <children>
             <StackPane>
                <children>
