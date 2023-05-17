@@ -115,6 +115,18 @@ public class DatabaseConnection {
         }
     }
 
+    public static boolean signInAdmin(String uN, String uP) throws SQLException {
+        ResultSet resultSet = st.executeQuery("SELECT a_Id, a_Password FROM Personal");
+        while (resultSet.next()) {
+            String username = resultSet.getString("a_Id");
+            String password = resultSet.getString("a_Password");
+            if (username.equals(uN) && password.equals(uP)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     }
 
