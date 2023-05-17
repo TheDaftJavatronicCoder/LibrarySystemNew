@@ -14,8 +14,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
 
-
-
             Parent root = FXMLLoader.load(getClass().getResource("startpage.fxml"));
 
             Scene scene = new Scene(root);

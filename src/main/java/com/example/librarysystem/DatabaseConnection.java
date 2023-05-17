@@ -6,7 +6,6 @@ public class DatabaseConnection {
 
     static String name = "";
     static String bookNames = "";
-
     static Connection conn = null;
     static Statement st = null;
 
