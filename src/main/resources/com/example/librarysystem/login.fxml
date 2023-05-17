@@ -32,11 +32,11 @@
                               <TextField fx:id="firstnameTextField" promptText="First name" />
                               <TextField fx:id="lastnameTextField" promptText="Last name" />
                               <TextField fx:id="emailTextField" promptText="Email " />
-                              <TextField fx:id="phonenumberTextField" promptText="Adress" />
-                              <TextField fx:id="adressTextField" promptText="Phone number" />
-                              <TextField fx:id="ageTextField" promptText="Username" />
-                              <TextField fx:id="roleTextField" promptText="Age" />
-                              <TextField fx:id="usernameTextField1" promptText="Public,Student, Scientist or Library Worker?  " />
+                              <TextField fx:id="phonenumberTextField" promptText="phonenumber" />
+                              <TextField fx:id="adressTextField" promptText="adress" />
+                              <TextField fx:id="ageTextField" promptText="age" />
+                              <TextField fx:id="roleTextField" promptText="role" />
+                              <TextField fx:id="usernameTextField1" promptText="username" />
                               <PasswordField fx:id="passwordTextField1" promptText="Password" />
                               <Button fx:id="createAccountButton2" mnemonicParsing="false" onAction="#onCreateButton" prefHeight="20.0" prefWidth="252.0" style="-fx-background-color: white;" text="Create" textFill="#263f73" />
                            </children>
@@ -93,3 +93,4 @@
       </VBox>
    </children>
 </AnchorPane>
+

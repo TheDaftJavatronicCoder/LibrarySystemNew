@@ -19,60 +19,85 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginController {
+    @FXML
+    private Button createAccountButton;
+    @FXML
+    private Button createAccountButton2;
+    @FXML
+    private Label labelStatusLoginPage;
+    @FXML
+    private Button loginButton3;
+    @FXML
+    private GridPane paneCreateForm;
+    @FXML
+    private PasswordField passwordTextField;
+    @FXML
+    private PasswordField passwordTextField1;
+    @FXML
+    private Pane pnlStatusLoginPage;
+    @FXML
+    private Button returnToStartpage3Button;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private TextField usernameTextField1;
+    @FXML
+    private TextField firstnameTextField;
+    @FXML
+    private TextField lastnameTextField;
+    @FXML
+    private TextField emailTextField;
+    @FXML
+    private TextField adressTextField;
+    @FXML
+    private TextField phonenumberTextField;
+    @FXML
+    private TextField ageTextField;
+    @FXML
+    private TextField roleTextField;
+
+    public LoginController() {
+    }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
-    @FXML
-    private Button createAccountButton;
-
-    @FXML
-    private Button createAccountButton2;
-
-    @FXML
-    private Label labelStatusLoginPage;
-
-    @FXML
-    private Button loginButton3;
-
-    @FXML
-    private GridPane paneCreateForm;
-
-    @FXML
-    private PasswordField passwordTextField;
-
-    @FXML
-    private PasswordField passwordTextField1;
-
-    @FXML
-    private Pane pnlStatusLoginPage;
-
-
-    @FXML
-    private Button returnToStartpage3Button;
-
-    @FXML
-    private TextField usernameTextField;
-
-    @FXML
-    private TextField usernameTextField1;
-
-
-
 
     @FXML
     protected void onLoginClick(ActionEvent e) throws SQLException, IOException {
-        String creditNam = usernameTextField.getText();
-        String creditPass = passwordTextField.getText();
-
-        if(DatabaseConnection.signIn(creditNam, creditPass)){
+        String creditNam = this.usernameTextField.getText();
+        String creditPass = this.passwordTextField.getText();
+        if (DatabaseConnection.signIn(creditNam, creditPass)) {
             System.out.println("Login successful");
-            continueToLoan();
-        }
-        else{
+            this.continueToLoan();
+        } else {
             System.out.println("Login failed");
-
         }
+
+    }
+
+    @FXML
+    private void createClass() throws SQLException {
+        String firstname = this.firstnameTextField.getText();
+        String lastname = this.lastnameTextField.getText();
+        String email = this.emailTextField.getText();
+        String phoneNumber = this.phonenumberTextField.getText();
+        String address = this.adressTextField.getText();
+        int agereal = 0;
+        String age = this.ageTextField.getText();
+
+        try {
+            agereal = Integer.parseInt(age);
+        } catch (NumberFormatException var12) {
+            System.out.println("Invalid age format: ");
+        }
+
+        String role = this.roleTextField.getText();
+        String username = this.usernameTextField1.getText();
+        String pass = this.passwordTextField1.getText();
+        System.out.println(firstname + " " + lastname);
+        DatabaseConnection databas3 = new DatabaseConnection();
+        databas3.insertPost(firstname, lastname, email, phoneNumber, address, agereal, role, username, pass);
     }
 
 
