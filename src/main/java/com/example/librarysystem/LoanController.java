@@ -41,6 +41,9 @@ public class LoanController implements Initializable {
     private Button startPageButton2;
 
     @FXML
+    private Button confirmLoanButton;
+
+    @FXML
     private TextField usernameTextField;
 
     @FXML
@@ -74,6 +77,14 @@ gpReturnLoan.toFront();
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);
         Stage currentStage = (Stage) startPageButton2.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
+    }
+
+    public void switchToCheckout() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("checkout.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) confirmLoanButton.getScene().getWindow();
         currentStage.setScene(myPagesScene);
     }
 }

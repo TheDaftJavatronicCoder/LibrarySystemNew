@@ -2,6 +2,7 @@ package com.example.librarysystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,8 +19,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class LoginController {
+public class LoginController implements Initializable {
 
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
     @FXML
     private Button createAccountButton;
 
@@ -54,8 +57,7 @@ public class LoginController {
     @FXML
     private TextField usernameTextField1;
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
+
 
 
     @FXML
@@ -99,6 +101,14 @@ public class LoginController {
         Stage currentStage = (Stage) loginButton3.getScene().getWindow();
         currentStage.setScene(myPagesScene);
 
+    }
+
+    public void onCreateButton() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loan.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) createAccountButton2.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
     }
 
     }

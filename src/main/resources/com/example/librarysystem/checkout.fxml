@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.CheckoutController">
+<AnchorPane prefHeight="435.0" prefWidth="638.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.CheckoutController">
    <children>
-      <VBox prefHeight="401.0" prefWidth="169.0" style="-fx-background-color: #263f73;">
+      <VBox prefHeight="435.0" prefWidth="169.0" style="-fx-background-color: #263f73;">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="171.0" text="LTU" textFill="WHITE">
                <font>
@@ -23,11 +22,11 @@
                   <Font name="Big Caslon Medium" size="34.0" />
                </font>
             </Label>
-            <Label prefHeight="203.0" prefWidth="169.0" textFill="#263f73" />
-            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="169.0" style="-fx-background-color: white;" text="Return to startpage" textFill="#263f73" />
+            <Label prefHeight="279.0" prefWidth="169.0" textFill="#263f73" />
+            <Button fx:id="startPageButton5" mnemonicParsing="false" onAction="#switchToStartPage5" prefHeight="38.0" prefWidth="169.0" style="-fx-background-color: white;" text="Return to startpage" textFill="#263f73" />
          </children>
       </VBox>
-      <Pane layoutX="169.0" prefHeight="116.0" prefWidth="431.0" style="-fx-background-color: #263f73;">
+      <Pane layoutX="169.0" prefHeight="116.0" prefWidth="469.0" style="-fx-background-color: #263f73;">
          <children>
             <Label layoutX="119.0" layoutY="41.0" text="Loan information" textFill="WHITE">
                <font>
@@ -36,7 +35,7 @@
             </Label>
          </children>
       </Pane>
-      <TextField layoutX="193.0" layoutY="137.0" prefHeight="204.0" prefWidth="384.0" />
-      <Button layoutX="491.0" layoutY="356.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" style="-fx-background-color: #263f73;" text="Print recipt" textFill="WHITE" />
+      <TextField layoutX="193.0" layoutY="137.0" prefHeight="240.0" prefWidth="437.0" />
+      <Button layoutX="526.0" layoutY="388.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" style="-fx-background-color: white;" text="Print recipt" textFill="#263f73" />
    </children>
 </AnchorPane>

@@ -38,7 +38,7 @@
                               <TextField fx:id="roleTextField" promptText="Age" />
                               <TextField fx:id="usernameTextField1" promptText="Public,Student, Scientist or Library Worker?  " />
                               <PasswordField fx:id="passwordTextField1" promptText="Password" />
-                              <Button fx:id="createAccountButton2" mnemonicParsing="false" prefHeight="20.0" prefWidth="252.0" style="-fx-background-color: white;" text="Create" textFill="#263f73" />
+                              <Button fx:id="createAccountButton2" mnemonicParsing="false" onAction="#onCreateButton" prefHeight="20.0" prefWidth="252.0" style="-fx-background-color: white;" text="Create" textFill="#263f73" />
                            </children>
                         </VBox>
                      </children>
