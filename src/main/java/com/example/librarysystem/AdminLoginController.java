@@ -56,8 +56,6 @@ public class AdminLoginController {
         stage.close();
     }
 
-
-
         }
 
 
