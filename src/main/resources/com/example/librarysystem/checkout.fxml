@@ -23,7 +23,7 @@
                </font>
             </Label>
             <Label prefHeight="279.0" prefWidth="169.0" textFill="#263f73" />
-            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="169.0" style="-fx-background-color: white;" text="Return to startpage" textFill="#263f73" />
+            <Button fx:id="startPageButton5" mnemonicParsing="false" onAction="#switchToStartPage5" prefHeight="38.0" prefWidth="169.0" style="-fx-background-color: white;" text="Return to startpage" textFill="#263f73" />
          </children>
       </VBox>
       <Pane layoutX="169.0" prefHeight="116.0" prefWidth="469.0" style="-fx-background-color: #263f73;">

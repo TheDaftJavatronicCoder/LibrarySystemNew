@@ -40,7 +40,7 @@
       </VBox>
       <Pane fx:id="panelStatus" layoutX="135.0" prefHeight="139.0" prefWidth="562.0" style="-fx-background-color: #263f73;">
          <children>
-            <Label fx:id="labelStatus" layoutX="241.0" layoutY="55.0" text="Loans" textFill="WHITE">
+            <Label fx:id="labelStatus" layoutX="241.0" layoutY="55.0" text="Loan" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="23.0" />
                </font>
@@ -91,7 +91,7 @@
                               </Button>
                               <TextField fx:id="usernameTextField" promptText="scanbarcode..." style="-fx-background-color: white;" />
                               <TextField prefHeight="128.0" prefWidth="466.0" style="-fx-background-color: white;" />
-                              <Button mnemonicParsing="false" style="-fx-background-color: #263f73; -fx-border-color: white;" text="Confirm loan" textFill="WHITE" />
+                              <Button fx:id="confirmLoanButton" mnemonicParsing="false" onAction="#switchToCheckout" style="-fx-background-color: #263f73; -fx-border-color: white;" text="Confirm loan" textFill="WHITE" />
                            </children>
                         </VBox>
                      </children>
