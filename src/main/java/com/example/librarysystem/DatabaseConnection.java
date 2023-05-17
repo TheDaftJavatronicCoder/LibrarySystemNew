@@ -93,6 +93,28 @@ public class DatabaseConnection {
         return returnString;
     }
 
+    private static final String INSERT_QUERY = "INSERT INTO Kund (namn_F, namn_E, epost, telefon_Nr, adress, age, kund_Typ, kund_Username, kund_Password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    public void insertPost(String namnF, String namnE, String epost, String telefonNr, String adress, int age, String kundTyp, String kundUsername, String kundPassword) throws SQLException {
+
+        PreparedStatement statement = conn.prepareStatement(INSERT_QUERY); {
+            statement.setString(1, namnF);
+            statement.setString(2, namnE);
+            statement.setString(3, epost);
+            statement.setString(4, telefonNr);
+            statement.setString(5, adress);
+            statement.setInt(6, age);
+            statement.setString(7, kundTyp);
+            statement.setString(8, kundUsername);
+            statement.setString(9, kundPassword);
+
+
+            int rowsAffected = statement.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+        }
+    }
+
 
     }
 
