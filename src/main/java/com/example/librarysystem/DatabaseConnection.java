@@ -115,6 +115,17 @@ public class DatabaseConnection {
         }
     }
 
+    public static boolean checkUsername(String nameNewUser) throws SQLException {
+        ResultSet resultSet = st.executeQuery("SELECT kund_Username FROM kund");
+        while (resultSet.next()) {
+            String UserExist = resultSet.getString("kund_Username");
+            if (UserExist.equals(nameNewUser)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean signInAdmin(String uN, String uP) throws SQLException {
         ResultSet resultSet = st.executeQuery("SELECT a_Id, a_Password FROM Personal");
         while (resultSet.next()) {

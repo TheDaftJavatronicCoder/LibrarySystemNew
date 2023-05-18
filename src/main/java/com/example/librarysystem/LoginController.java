@@ -78,6 +78,7 @@ public class LoginController {
 
     @FXML
     private void createClass() throws SQLException {
+        DatabaseConnection databas3 = new DatabaseConnection();
         String firstname = this.firstnameTextField.getText();
         String lastname = this.lastnameTextField.getText();
         String email = this.emailTextField.getText();
@@ -88,15 +89,20 @@ public class LoginController {
 
         try {
             agereal = Integer.parseInt(age);
-        } catch (NumberFormatException var12) {
-            System.out.println("Invalid age format: ");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid age format, should be a number: ");
+            return;
         }
 
         String role = this.roleTextField.getText();
         String username = this.usernameTextField1.getText();
+        if(databas3.checkUsername(username)){
+            System.out.println("Username already taken");
+            return;
+        }
         String pass = this.passwordTextField1.getText();
         System.out.println(firstname + " " + lastname);
-        DatabaseConnection databas3 = new DatabaseConnection();
+
         databas3.insertPost(firstname, lastname, email, phoneNumber, address, agereal, role, username, pass);
     }
 
