@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -57,6 +58,9 @@ public class LoginController {
     @FXML
     private TextField roleTextField;
 
+    @FXML
+    private Label usernameTaken1;
+
     public LoginController() {
     }
 
@@ -68,10 +72,10 @@ public class LoginController {
         String creditNam = this.usernameTextField.getText();
         String creditPass = this.passwordTextField.getText();
         if (DatabaseConnection.signIn(creditNam, creditPass)) {
-            System.out.println("Login successful");
+            usernameTaken1.setText("Login successful");
             this.continueToLoan();
         } else {
-            System.out.println("Login failed");
+            usernameTaken1.setText("Login failed");
         }
 
     }
@@ -90,15 +94,14 @@ public class LoginController {
         try {
             agereal = Integer.parseInt(age);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid age format, should be a number: ");
+            usernameTaken1.setText("Age is a number, put in a number!");
             return;
         }
 
         String role = this.roleTextField.getText();
         String username = this.usernameTextField1.getText();
-        if(databas3.checkUsername(username)){
-            System.out.println("Username already taken");
-            return;
+        if (DatabaseConnection.checkUsername(username)){
+            usernameTaken1.setText("Username is already taken!");
         }
 
         String pass = this.passwordTextField1.getText();
@@ -106,6 +109,7 @@ public class LoginController {
 
         databas3.insertPost(firstname, lastname, email, phoneNumber, address, agereal, role, username, pass);
     }
+
 
 
 
@@ -144,3 +148,4 @@ public class LoginController {
     }
 
     }
+
