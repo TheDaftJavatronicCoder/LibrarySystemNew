@@ -100,6 +100,7 @@ public class LoginController {
             System.out.println("Username already taken");
             return;
         }
+
         String pass = this.passwordTextField1.getText();
         System.out.println(firstname + " " + lastname);
 

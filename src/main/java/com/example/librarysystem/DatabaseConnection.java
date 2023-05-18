@@ -126,6 +126,7 @@ public class DatabaseConnection {
         return false;
     }
 
+
     public static boolean signInAdmin(String uN, String uP) throws SQLException {
         ResultSet resultSet = st.executeQuery("SELECT a_Id, a_Password FROM Personal");
         while (resultSet.next()) {
