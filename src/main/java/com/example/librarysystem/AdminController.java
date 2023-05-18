@@ -10,40 +10,98 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
 
     @FXML
-    private Button activeLoansButton;
+    private TextField DVDAgeRestrictionTextField;
+
+    @FXML
+    private TextField DVDBarcodeTextField;
+
+    @FXML
+    private TextField DVDCopiesTextField;
+
+    @FXML
+    private TextField DVDDirectorTextButton;
+
+    @FXML
+    private TextField DVDGenreTextField;
+
+    @FXML
+    private TextField DVDNameTextFIeld;
+
+    @FXML
+    private TextField DVDRealeseYearTextField;
+
+    @FXML
+    private TextField DVDShelfTesxtField;
+
+    @FXML
+    private Button addDVDButton;
 
     @FXML
     private Button addObjectButton;
 
     @FXML
+    private TextField bookAuthorTextField1;
+
+    @FXML
+    private TextField bookBarcodeTextField1;
+
+    @FXML
+    private TextField bookCategoryTextField1;
+
+    @FXML
+    private TextField bookCopiesTextField1;
+
+    @FXML
+    private TextField bookGenreTextField1;
+
+    @FXML
+    private TextField bookISBNTextField1;
+
+    @FXML
+    private TextField bookNameTextField1;
+
+    @FXML
+    private TextField bookRealeseYearTextField1;
+
+    @FXML
+    private TextField bookShelfTextField1;
+
+    @FXML
     private Button feesButton;
+
+
+
+    @FXML
+    private GridPane gpAddBook;
+
+    @FXML
+    private GridPane gpAddDVD;
+
+    @FXML
+    private Button insertBookButton1;
+
+    @FXML
+    private Button insertDVDButton;
 
     @FXML
     private Label lblStatus;
 
     @FXML
     private Pane pnlStatus;
-
-    @FXML
-    private GridPane gpFees;
-
-    @FXML
-    private GridPane gpActiveLoans;
-
-    @FXML
-    private GridPane gpAddObject;
 
     @FXML
     private Button startPageButton;
@@ -54,30 +112,135 @@ public class AdminController implements Initializable {
 
     }
 
+
+    @FXML
+    private void createBokClass() throws SQLException {
+        String barcode_Bok = this.bookBarcodeTextField1.getText();
+        DatabaseConnection databas5 = null;
+        if (databas5.checkBarcode_Bok(barcode_Bok)) {
+            System.out.println("Username already taken");
+            return;
+        }
+
+        String bok_Namn = this.bookNameTextField1.getText();
+
+        int bok_Ar = 0;
+        String bok_ArReal = this.bookRealeseYearTextField1.getText();
+
+        try {
+            bok_Ar = Integer.parseInt(bok_ArReal);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+        String bok_Genre = this.bookGenreTextField1.getText();
+        String kategori = this.bookCategoryTextField1.getText();
+        String bok_Forfattare = this.bookAuthorTextField1.getText();
+
+        int HyllaReal = 0;
+        String Hylla = this.bookShelfTextField1.getText();
+
+        try {
+            HyllaReal = Integer.parseInt(Hylla);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String ISBN = this.bookISBNTextField1.getText();
+
+        int Antal_Kopior_InneReal = 0;
+        String Antal_Kopior_Inne = this.bookCopiesTextField1.getText();
+
+        try {
+            Antal_Kopior_InneReal = Integer.parseInt(Antal_Kopior_Inne);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        databas5 = new DatabaseConnection();
+        databas5.insertBok(barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, HyllaReal, Antal_Kopior_InneReal, ISBN);
+    }
+
+
+
+    @FXML
+    private void createDVDClass() throws SQLException {
+        String barcode_DVD = this.DVDBarcodeTextField.getText();
+        DatabaseConnection databas6 = null;
+        if (databas6.checkBarcode_DVD(barcode_DVD)) {
+            System.out.println("Username already taken");
+            return;
+        }
+
+        String dvd_Namn = this.DVDNameTextFIeld.getText();
+
+        int dvd_Ar = 0;
+        String dvd_ArReal = this.DVDRealeseYearTextField.getText();
+
+        try {
+            dvd_Ar = Integer.parseInt(dvd_ArReal);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+        String dvd_Genre = this.DVDGenreTextField.getText();
+        String dvd_Regissor = this.DVDDirectorTextButton.getText();
+        int aldersgransReal = 0;
+        String aldersgrans = this.DVDAgeRestrictionTextField.getText();
+        try {
+            aldersgransReal = Integer.parseInt(aldersgrans);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int HyllaReal = 0;
+        String Hylla1 = this.DVDShelfTesxtField.getText();
+
+        try {
+            HyllaReal = Integer.parseInt(Hylla1);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+
+        int Antal_Kopior_InneReal = 0;
+        String Antal_Kopior_Inne = this.DVDCopiesTextField.getText();
+
+        try {
+            Antal_Kopior_InneReal = Integer.parseInt(Antal_Kopior_Inne);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        databas6 = new DatabaseConnection();
+        databas6.insertDVD(barcode_DVD, dvd_Namn, dvd_Ar, dvd_Genre, dvd_Regissor, aldersgransReal, HyllaReal, Antal_Kopior_InneReal);
+    }
+
+
+
+
+
     @FXML
     private void handleClicks(ActionEvent event) {
 
         if (event.getSource() == addObjectButton) {
 
-            lblStatus.setText("Add Object");
+            lblStatus.setText("Add Book");
             pnlStatus.setBackground(new Background(new BackgroundFill(Color.rgb(38, 63, 115), CornerRadii.EMPTY, Insets.EMPTY)));
-            gpAddObject.toFront();
+            gpAddBook.toFront();
             //handle startPageButton
-        } else if (event.getSource() == activeLoansButton) {
+        } else if (event.getSource() == addDVDButton) {
 
-            lblStatus.setText("Active Loans");
+            lblStatus.setText("Add DVD");
             pnlStatus.setBackground(new Background(new BackgroundFill(Color.rgb(45, 110, 80), CornerRadii.EMPTY, Insets.EMPTY)));
-            gpActiveLoans.toFront();
+            gpAddDVD.toFront();
 
             //handle addObjectButton
-        } else if (event.getSource() == feesButton) {
-
-            lblStatus.setText("Fees");
-            pnlStatus.setBackground(new Background(new BackgroundFill(Color.rgb(90, 30, 10), CornerRadii.EMPTY, Insets.EMPTY)));
-            gpFees.toFront();
-
-            //handle addObjectButton
-
         }
 
 

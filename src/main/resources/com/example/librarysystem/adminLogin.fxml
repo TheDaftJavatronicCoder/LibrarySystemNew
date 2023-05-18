@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.AdminLoginController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="246.0" style="-fx-background-color: #263F70;" BorderPane.alignment="CENTER">
          <children>
@@ -36,14 +36,17 @@
                   <Font name="Big Caslon Medium" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextfield" blendMode="DARKEN" editable="false" layoutX="97.0" layoutY="136.0" promptText="User id" />
-            <PasswordField fx:id="passwordTextfield" blendMode="DARKEN" layoutX="97.0" layoutY="174.0" promptText="Password">
+            <TextField fx:id="usernameTextfield1" blendMode="DARKEN" layoutX="97.0" layoutY="136.0" promptText="Username" />
+            <PasswordField fx:id="passwordTextfield1" blendMode="DARKEN" layoutX="97.0" layoutY="174.0" promptText="Password">
                <effect>
                   <Blend />
                </effect></PasswordField>
-            <Button fx:id="loginButton" layoutX="98.0" layoutY="217.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: #ffffff; -fx-border-color: #263f70;" text="Login" textFill="#263f70" />
-            <Button fx:id="cancelButton" layoutX="98.0" layoutY="262.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: #263F70;" text="Cancel" textFill="WHITE" />
+            <Button fx:id="loginButton" layoutX="98.0" layoutY="217.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: #ffffff; -fx-border-color: #263f70;" text="Login" textFill="#263f70" />
+            <Label fx:id="loginMessageLabel" layoutX="75.0" layoutY="107.0" prefHeight="17.0" prefWidth="300.0" textAlignment="JUSTIFY" textFill="#e15d5d" />
+            <Button fx:id="cancelButton" layoutX="98.0" layoutY="262.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: #263F70;" text="Cancel" textFill="WHITE" />
          </children>
       </AnchorPane>
    </right>
 </BorderPane>
+
+
