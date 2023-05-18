@@ -2,13 +2,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
@@ -16,9 +13,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="476.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="557.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.AdminController">
    <children>
-      <VBox prefHeight="476.0" prefWidth="180.0" spacing="5.0" style="-fx-background-color: #263f73;">
+      <VBox prefHeight="598.0" prefWidth="180.0" spacing="15.0" style="-fx-background-color: #263f73;">
          <children>
             <Label alignment="CENTER" prefHeight="77.0" prefWidth="167.0" text="Admin page" textFill="WHITE">
                <font>
@@ -26,16 +23,17 @@
                </font>
             </Label>
             <Line endX="69.67156982421875" endY="1.1715729236602783" startX="-100.0" stroke="WHITE" strokeWidth="4.0" />
-            <Button fx:id="addObjectButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="Add object" textFill="WHITE">
+            <Button fx:id="addDVDButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: transparent;" text="Add DVD" textFill="WHITE">
+               <font>
+                  <Font name="Big Caslon Medium" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="addObjectButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="Add Book" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="activeLoansButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: transparent;" text="Active loans" textFill="WHITE">
-               <font>
-                  <Font name="Big Caslon Medium" size="14.0" />
-               </font></Button>
-            <Button fx:id="feesButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="184.0" style="-fx-background-color: transparent;" text="Fees" textFill="WHITE">
+            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="184.0" style="-fx-background-color: transparent;" text="Overdue loans" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="14.0" />
                </font>
@@ -43,94 +41,76 @@
             <Button fx:id="startPageButton" mnemonicParsing="false" onAction="#switchToStartPage" prefHeight="50.0" prefWidth="169.0" style="-fx-background-color: transparent;" text="Start page" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="14.0" />
-               </font></Button>
+               </font>
+            </Button>
          </children>
       </VBox>
-      <VBox layoutX="185.0" layoutY="177.0" prefHeight="285.0" prefWidth="673.0">
+      <Pane fx:id="pnlStatus" layoutX="178.0" prefHeight="105.0" prefWidth="381.0" style="-fx-background-color: #263f73;">
          <children>
-            <StackPane>
-               <children>
-                  <GridPane fx:id="gpFees" prefHeight="285.0" prefWidth="618.0" style="-fx-background-color: white;">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.0" minWidth="10.0" prefWidth="430.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0">
-                           <children>
-                              <TextField prefHeight="26.0" prefWidth="376.0" promptText="Insert value....." style="-fx-border-color: #263f73; -fx-background-color: white;" />
-                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #263f73; -fx-border-color: #263f73;" text="Search for loans with fees" textFill="#263f73">
-                                 <font>
-                                    <Font name="Big Caslon Medium" size="17.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </GridPane>
-                  <GridPane fx:id="gpAddObject" prefHeight="285.0" prefWidth="618.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.0" minWidth="10.0" prefWidth="430.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <TableView prefHeight="256.0" prefWidth="673.0" GridPane.rowIndex="1">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="ISBN" />
-                              <TableColumn prefWidth="75.0" text="Name" />
-                              <TableColumn prefWidth="88.0" text="Realising year" />
-                              <TableColumn prefWidth="62.0" text="Genre" />
-                              <TableColumn prefWidth="75.0" text="Category" />
-                              <TableColumn prefWidth="75.0" text="Author" />
-                              <TableColumn prefWidth="65.0" text="Shelf" />
-                              <TableColumn prefWidth="85.0" text="Copies" />
-                              <TableColumn prefWidth="75.0" text="Barcode" />
-                           </columns>
-                        </TableView>
-                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0">
-                           <children>
-                              <TextField prefHeight="26.0" prefWidth="376.0" promptText="Insert value....." style="-fx-border-color: #263f73; -fx-background-color: white;" />
-                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="92.0" style="-fx-background-color: #263f73; -fx-border-color: #263f73;" text="Add object" textFill="#263f73">
-                                 <font>
-                                    <Font name="Big Caslon Medium" size="17.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </GridPane>
-                  <GridPane fx:id="gpActiveLoans" prefHeight="285.0" prefWidth="618.0" style="-fx-background-color: white;">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="673.0" minWidth="10.0" prefWidth="430.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="138.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="240.0" minHeight="10.0" prefHeight="237.0" vgrow="SOMETIMES" />
-
-	private WebElement webElement;
-                    </rowConstraints>
-                     <children>
-                        <HBox prefHeight="34.0" prefWidth="673.0" spacing="10.0" />
-                     </children>
-                  </GridPane>
-               </children>
-            </StackPane>
-         </children>
-      </VBox>
-      <Pane fx:id="pnlStatus" layoutX="178.0" prefHeight="173.0" prefWidth="699.0" style="-fx-background-color: #263f73;">
-         <children>
-            <Label fx:id="lblStatus" alignment="CENTER" layoutX="213.0" layoutY="62.0" prefHeight="50.0" prefWidth="283.0" text="Welcome" textFill="WHITE">
+            <Label fx:id="lblStatus" alignment="CENTER" layoutX="79.0" layoutY="28.0" prefHeight="50.0" prefWidth="224.0" text="Welcome" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="36.0" />
                </font>
             </Label>
             <Line endX="-10.5" endY="168.0" layoutX="14.0" layoutY="7.0" startX="-10.5" startY="-7.0" stroke="WHITE" strokeWidth="4.0" />
          </children></Pane>
+      <VBox layoutX="192.0" layoutY="117.0" prefHeight="468.0" prefWidth="353.0">
+         <children>
+            <StackPane prefHeight="472.0" prefWidth="353.0">
+               <children>
+                  <GridPane fx:id="gpAddBook" prefHeight="306.0" prefWidth="216.0" style="-fx-background-color: #263f73;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                           <children>
+                              <TextField fx:id="bookBarcodeTextField1" promptText="Insert barcode" />
+                              <TextField fx:id="bookNameTextField1" promptText="Insert book name" />
+                              <TextField fx:id="bookRealeseYearTextField1" promptText="Insert release year" />
+                              <TextField fx:id="bookGenreTextField1" promptText="Insert genre" />
+                              <TextField fx:id="bookCategoryTextField1" promptText="Insert category" />
+                              <TextField fx:id="bookAuthorTextField1" promptText="Insert author" />
+                              <TextField fx:id="bookShelfTextField1" promptText="insert shelf" />
+                              <TextField fx:id="bookCopiesTextField1" promptText="Insert number of copies " />
+                              <TextField fx:id="bookISBNTextField1" promptText="Insert ISBN" />
+                              <Button fx:id="insertBookButton1" mnemonicParsing="false" onAction="#createBokClass" prefHeight="20.0" prefWidth="252.0" style="-fx-background-color: white;" text="Insert book" textFill="#263f73" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+                  <GridPane fx:id="gpAddDVD" prefHeight="326.0" prefWidth="216.0" style="-fx-background-color: #263f73;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <VBox prefHeight="332.0" prefWidth="216.0" spacing="15.0">
+                           <children>
+                              <TextField fx:id="DVDBarcodeTextField" promptText="Insert barcode" />
+                              <TextField fx:id="DVDNameTextFIeld" promptText="Insert DVD name" />
+                              <TextField fx:id="DVDRealeseYearTextField" promptText="Insert release year" />
+                              <TextField fx:id="DVDGenreTextField" promptText="Insert DVD genre" />
+                              <TextField fx:id="DVDDirectorTextButton" promptText="Insert DVD director" />
+                              <TextField fx:id="DVDAgeRestrictionTextField" promptText="Insert age restriction" />
+                              <TextField fx:id="DVDShelfTesxtField" promptText="Insert shelf" />
+                              <TextField fx:id="DVDCopiesTextField" promptText="Insert number of copies" />
+                              <Button fx:id="insertDVDButton" mnemonicParsing="false" onAction="#createDVDClass" style="-fx-background-color: White;" text="Insert DVD" textFill="#263f73">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
