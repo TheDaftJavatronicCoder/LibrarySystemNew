@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException, SQLException {
 
 
-            Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("reminderview.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("LTU Library System");
             stage.setScene(scene);

@@ -198,6 +198,73 @@ public class DatabaseConnection {
         }
         return result;
     }
+
+    private static final String INSERT_QUERY2 = "INSERT INTO Bok (barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, Hylla, Antal_Kopior_Inne, ISBN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    public void insertBok(String barcode_Bok, String bok_Namn, int bok_Ar, String bok_Genre, String kategori, String bok_Forfattare, int Hylla, int Antal_Kopior_Inne, String ISBN) throws SQLException {
+
+        PreparedStatement statement = conn.prepareStatement(INSERT_QUERY2); {
+            statement.setString(1, barcode_Bok);
+            statement.setString(2, bok_Namn);
+            statement.setInt(3, bok_Ar);
+            statement.setString(4, bok_Genre);
+            statement.setString(5, kategori);
+            statement.setString(6, bok_Forfattare);
+            statement.setInt(7, Hylla);
+            statement.setInt(8, Antal_Kopior_Inne);
+            statement.setString(9, ISBN);
+
+            int rowsAffected = statement.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+        }
+    }
+
+    public static boolean checkBarcode_Bok(String barcodeBok) throws SQLException {
+        ResultSet resultSet = st.executeQuery("SELECT barcode_Bok FROM Bok");
+        while (resultSet.next()) {
+            String UserExist = resultSet.getString("barcode_Bok");
+            if (UserExist.equals(barcodeBok)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static final String INSERT_QUERY3 = "INSERT INTO DVD (barcode_DVD, dvd_Namn, dvd_Ar, dvd_Genre, dvd_Regissor, aldersgrans, Hylla, Antal_Kopior_Inne) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    public void insertDVD(String barcode_DVD, String dvd_Namn, int dvd_Ar, String dvd_Genre, String dvd_Regissor, int aldersgrans, int Hylla, int Antal_Kopior_Inne) throws SQLException {
+
+        PreparedStatement statement = conn.prepareStatement(INSERT_QUERY3); {
+            statement.setString(1, barcode_DVD);
+            statement.setString(2, dvd_Namn);
+            statement.setInt(3, dvd_Ar);
+            statement.setString(4, dvd_Genre);
+            statement.setString(5, dvd_Regissor);
+            statement.setInt(6, aldersgrans);
+            statement.setInt(7, Hylla);
+            statement.setInt(8, Antal_Kopior_Inne);
+
+
+            int rowsAffected = statement.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+        }
+    }
+
+    public static boolean checkBarcode_DVD(String barcodeBok) throws SQLException {
+        ResultSet resultSet = st.executeQuery("SELECT barcode_DVD FROM DVD");
+        while (resultSet.next()) {
+            String UserExist = resultSet.getString("barcode_DVD");
+            if (UserExist.equals(barcodeBok)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 }
 
 
