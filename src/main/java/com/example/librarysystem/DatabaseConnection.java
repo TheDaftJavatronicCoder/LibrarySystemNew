@@ -1,10 +1,8 @@
 package com.example.librarysystem;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 public class DatabaseConnection {
     static String name = "";

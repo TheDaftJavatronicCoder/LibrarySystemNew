@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.ReminderViewController">
    <children>
-      <AnchorPane layoutX="-2.0" prefHeight="123.0" prefWidth="603.0" style="-fx-background-color: #263F70;">
+      <AnchorPane prefHeight="123.0" prefWidth="603.0" style="-fx-background-color: #263F70;">
          <children>
             <Label layoutX="276.0" layoutY="29.0" text="LTU" textFill="WHITE">
                <font>
@@ -24,7 +23,7 @@
          </children>
       </AnchorPane>
       <TextField fx:id="emailTextField" layoutX="15.0" layoutY="142.0" prefHeight="159.0" prefWidth="573.0" />
-      <Button fx:id="getEmailButton" layoutX="195.0" layoutY="334.0" mnemonicParsing="false" style="-fx-background-color: #263F70;" text="GET EMAIL" textFill="WHITE">
+      <Button fx:id="getEmailButton" layoutX="195.0" layoutY="334.0" mnemonicParsing="false" onAction="#sendReminder" style="-fx-background-color: #263F70;" text="GET EMAIL" textFill="WHITE">
          <font>
             <Font name="Symbol" size="13.0" />
          </font>
