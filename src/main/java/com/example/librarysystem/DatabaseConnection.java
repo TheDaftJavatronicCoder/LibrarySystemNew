@@ -1,6 +1,8 @@
 package com.example.librarysystem;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,13 @@ public class DatabaseConnection {
     static String bookNames = "";
     static Connection conn = null;
     static Statement st = null;
+
+     int kundIDcurr = 6;
+     int lanID = 0;
+
+    String barcodeAddLoan = "";
+
+    String kategoriAddLoan = "";
 
     public static void connect() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/Testingbase2"; // Replace with your database URL
@@ -20,10 +29,14 @@ public class DatabaseConnection {
             conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connected to the database!");
             st = conn.createStatement();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
+
 
     public static void disconnect() throws SQLException {
         conn.close();
@@ -95,7 +108,41 @@ public class DatabaseConnection {
         return returnString;
     }
 
+    public static String searchDVD(String term) {
+        String searchString = term;
+        StringBuilder result = new StringBuilder();
+        ResultSet rs = null;
+        try {
+            rs =  st.executeQuery("SELECT * FROM dvd");
+
+            // the string to search for
+            while (rs.next()) {
+                boolean matchFound = false;
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    String columnValue = rs.getString(i);
+                    if (columnValue.toLowerCase().contains(searchString.toLowerCase())) {
+                        matchFound = true;
+                        break;
+                    }
+                }
+                if (matchFound) {
+                    String bookDvd = rs.getString("dvd_Namn");
+                    String DvdAr = rs.getString("dvd_Ar");
+                    bookNames += bookDvd + " ("+ DvdAr + ")" + "\n";
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String returnString = bookNames;
+        bookNames = "";
+        return returnString;
+    }
+
     private static final String INSERT_QUERY = "INSERT INTO Kund (namn_F, namn_E, epost, telefon_Nr, adress, age, kund_Typ, kund_Username, kund_Password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
 
     public void insertPost(String namnF, String namnE, String epost, String telefonNr, String adress, int age, String kundTyp, String kundUsername, String kundPassword) throws SQLException {
 
@@ -263,9 +310,177 @@ public class DatabaseConnection {
         return false;
     }
 
+    public void addNewLoan(String lone) throws SQLException {
+        ResultSet resultSet = st.executeQuery("SELECT kund_Id FROM lan");
+        boolean controllLan = true;
+        while (resultSet.next()) {
+            int gottenId = resultSet.getInt("kund_Id");
+            if (kundIDcurr == gottenId) {
+                controllLan = false;
+            }
+        }
+        if (controllLan) {
+            String query = "INSERT INTO lan (kund_Id) VALUES (?)";
+
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, kundIDcurr);
+            statement.executeUpdate();
 
 
-}
+        }
+        resultSet = st.executeQuery("SELECT lan_Id FROM lan");
+        while (resultSet.next()) {
+            lanID = resultSet.getInt("lan_Id");
+        }
+        String[] loneArray = lone.split("\n");
+        for (int i = 0; i < loneArray.length; i++) {
+            if (loneArray[i].startsWith("Book: ")) {
+                String updatedString = loneArray[i].replaceFirst("Book: ", "");
+                updatedString = updatedString.substring(0, updatedString.length() - 7).trim();
+                System.out.println("Updated string (Book): " + updatedString);
+
+                try {
+                    Statement statement = conn.createStatement();
+
+                    String query = "SELECT kategori, barcode_Bok, bok_Namn FROM Bok";
+                    resultSet = statement.executeQuery(query);
+
+                    while (resultSet.next()) {
+                        String nammmn = resultSet.getString("bok_Namn");
+                        String kategori = resultSet.getString("kategori");
+                        String barcode = resultSet.getString("barcode_Bok");
+                        if(nammmn.equals(updatedString)) {
+                            barcodeAddLoan = barcode;
+                            kategoriAddLoan = kategori;
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                String insertQuery = "INSERT INTO Bok_Lan (datum_Utlanad, datum_Faktisk_retur, skuld, bok_Status, barcode_Bok, lan_Id) VALUES (?, ?, ?, ?, ?, ?)";
+
+                try (PreparedStatement statement = conn.prepareStatement(insertQuery)) {
+                    Date InDate = calcReturnDate(kategoriAddLoan);
+                    LocalDate currentDate = LocalDate.now();
+                    statement.setDate(1, Date.valueOf(currentDate)); // Replace with the actual date of borrowing
+                    statement.setDate(2, InDate); // Replace with the actual return date
+                    statement.setInt(3, 0); // Replace with the actual value for "skuld"
+                    statement.setString(4, "Aktiv"); // Replace with the actual value for "bok_Status"
+                    statement.setString(5, barcodeAddLoan);
+                    statement.setInt(6, lanID);
+
+                    int rowsAffected = statement.executeUpdate();
+                    System.out.println(rowsAffected + " row(s) inserted into Bok_Lan table.");
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }if(loneArray[i].startsWith("DVD: ")){
+                String updatedString = loneArray[i].replaceFirst("DVD: ", "");
+                updatedString = updatedString.substring(0, updatedString.length() - 7).trim();
+                System.out.println("Updated string (DVD): " + updatedString);
+
+                try {
+                    Statement statement = conn.createStatement();
+
+                    String query = "SELECT aldersgrans, barcode_DVD, dvd_Namn FROM dvd";
+                    resultSet = statement.executeQuery(query);
+
+                    while (resultSet.next()) {
+                        String nammmn = resultSet.getString("dvd_Namn");
+                        String agelimit = resultSet.getString("aldersgrans");
+                        String barcode = resultSet.getString("barcode_DVD");
+                        if(nammmn.equals(updatedString)) {
+                            barcodeAddLoan = barcode;
+                        }
+                        //ADD CHECK FOR AGE LIMIT
+                        //ADD CHECK FOR LOAN LIMIT
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                String insertQuery = "INSERT INTO DVD_Lan (datum_Utlanad, datum_Faktisk_retur, skuld, dvd_Status, barcode_DVD, lan_Id) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)";
+
+                try (PreparedStatement statement = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    Date borrowDate = Date.valueOf(LocalDate.now()); // Replace with the actual borrow date
+                    Date returnDate = calcReturnDate("dvd"); // Replace with the actual return date
+
+                    statement.setDate(1, borrowDate);
+                    statement.setDate(2, returnDate);
+                    statement.setInt(3, 0); // Replace with the actual value for "skuld"
+                    statement.setString(4, "Aktiv"); // Replace with the actual value for "dvd_Status"
+                    statement.setString(5, barcodeAddLoan);
+                    statement.setInt(6, lanID); // Replace with the actual value for "lan_Id"
+
+                    int rowsAffected = statement.executeUpdate();
+                    System.out.println(rowsAffected + " row(s) inserted into Bok_Lan table.");
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+        }
+//
+
+    }
+    public static Date calcReturnDate(String kategoriAddLoan) {
+        LocalDate currentDate = LocalDate.now();
+
+        if (kategoriAddLoan.equals("skönlitterär")) {
+            System.out.println("found skönlitterär");
+            // Add 2 weeks to the current date
+            LocalDate returnDate = currentDate.plus(2, ChronoUnit.WEEKS);
+            return Date.valueOf(returnDate);
+        } else if (kategoriAddLoan.equals("skolbok")) {
+            System.out.println("found skolbok");
+            // Add 1 week to the current date
+            LocalDate returnDate = currentDate.plus(1, ChronoUnit.WEEKS);
+            return Date.valueOf(returnDate);
+        } else if (kategoriAddLoan.equals("dvd")) {
+            // Return current date without any addition
+            LocalDate returnDate = currentDate.plus(1, ChronoUnit.WEEKS);
+            return Date.valueOf(returnDate);
+        } else {
+            System.out.println("dindt find anything");
+            // Invalid category, return null or throw an exception
+            // Handle the case based on your application's requirements
+            return null;
+        }
+
+    }
+
+
+
+
+
+
+
+//            String sql = "INSERT INTO lan (lan_Id, kund_Id, datum_Lan, datum_Faktisk_retur) VALUES (?, ?, ?, ?)";
+//            try {
+//                PreparedStatement statement = conn.prepareStatement(sql);
+//                statement.setInt(1, Integer.parseInt(loneArray2[0]));
+//                statement.setInt(2, Integer.parseInt(loneArray2[1]));
+//                statement.setString(3, loneArray2[2]);
+//                statement.setString(4, loneArray2[3]);
+//                statement.executeUpdate();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+
+
+
+
+    }
+
+
+
+
 
 
 

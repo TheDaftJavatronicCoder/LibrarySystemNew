@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SearchController {
+public class SearchdvdController {
 
     @FXML
     TextField searchTextfield;
@@ -26,9 +28,6 @@ public class SearchController {
 
     @FXML
     ScrollPane scrollPane1;
-
-    @FXML
-    Button pickBtn;
 
     @FXML
     Label Picked;
@@ -43,35 +42,8 @@ public class SearchController {
 
     String pickedDVD;
 
-    String CompLoan = "";
-
-    String Type;
-
     private List<String> loanList = LoanList.getList();
 
-
-    @FXML
-    protected void SearchFuncbook(ActionEvent e) throws SQLException {
-        TextFieldResult.getChildren().clear();
-        String textFieldText = searchTextfield.getText();
-        String s1 = DatabaseConnection.searchBook(textFieldText);
-        String[] resultArray = s1.split("\n");
-
-        for (String result : resultArray) {
-            Text resultText = new Text(" "+result + "\n");
-            resultText.setFill(Color.BLUE);
-            resultText.setOnMouseClicked(event -> {
-                Picked.setText(resultText.getText());
-                pickedbook = resultText.getText();
-                Type = "Book: ";
-            });
-            resultText.setTextAlignment(TextAlignment.LEFT);
-            resultText.setWrappingWidth(TextFieldResult.getPrefWidth());
-            TextFieldResult.getChildren().add(resultText);
-        }
-
-        scrollPane1.setContent(TextFieldResult);
-    }
 
     @FXML
     protected void SearchFundvd(ActionEvent e) throws SQLException {
@@ -86,7 +58,6 @@ public class SearchController {
             resultText.setOnMouseClicked(event -> {
                 Picked.setText(resultText.getText());
                 pickedDVD = resultText.getText();
-                Type = "DVD: ";
             });
             resultText.setTextAlignment(TextAlignment.LEFT);
             resultText.setWrappingWidth(TextFieldResult.getPrefWidth());
@@ -97,10 +68,8 @@ public class SearchController {
     }
 
 
-
     @FXML
     protected void goToLoan() throws IOException {
-        LoanController.UpString(CompLoan);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loan.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);
@@ -110,30 +79,18 @@ public class SearchController {
 
 
     @FXML
-    protected void ClickButton(ActionEvent e) throws SQLException {
-        if(Type.equals("Book: ")) {
-            if (pickedbook == null) {
-                Picked.setText("Please pick a Item");
-            } else {
-                Picked.setText("Item was added");
-                System.out.println(pickedbook);
-                CompLoan = CompLoan + Type + pickedbook + "\n";
-            }
+    protected void ClickButtonDvd(ActionEvent e) throws SQLException {
+        if(pickedDVD == null){
+            Picked.setText("Please pick a book");
+        }else{
+            LoanList.addToList("dvd: ");
+            LoanList.addToList(pickedDVD);
+            LoanList.addToList("\n");
+            Picked.setText("DVD was added");
+            System.out.println(pickedDVD);
+            System.out.println("liste item "+LoanList.getList().get(0));
         }
-        else if(Type.equals("DVD: ")){
-            if (pickedDVD == null) {
-                Picked.setText("Please pick a Item");
-            } else {
-                Picked.setText("Item was added");
-                System.out.println(pickedDVD);
-                CompLoan = CompLoan + Type + pickedDVD + "\n";
-            }
-        }
+
+
     }
-
-
 }
-
-
-
-
