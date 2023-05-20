@@ -19,6 +19,15 @@ public class DatabaseConnection {
 
     String kategoriAddLoan = "";
 
+    String gottenRole = "";
+    int gottenAge = 0;
+
+    int LoanLimitCurr = 0;
+
+    boolean skipNextLoan = false;
+
+    int agelimitCurr;
+
     public static void connect() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/Testingbase2"; // Replace with your database URL
         String username = "root"; // Replace with your MySQL username
@@ -55,26 +64,6 @@ public class DatabaseConnection {
         return false;
     }
 
-
-//    public static String testSearch() throws SQLException {
-//        // Database credentials
-//
-//        ResultSet resultSet = st.executeQuery("SELECT * FROM users");
-//
-//        name = "";
-//        while (resultSet.next()) {
-//            int id = resultSet.getInt("id");
-//            String firstName = resultSet.getString("firstname");
-//            String lastName = resultSet.getString("lastname");
-//            String fullName = firstName + " " + lastName;
-//            name += fullName + "\n";
-//        }
-//
-//        // Don't forget to close the connection and result set when you're done
-//        resultSet.close();
-//
-//        return name;
-//    }
 
     public static String searchBook(String term) {
         String searchString = term;
@@ -332,18 +321,38 @@ public class DatabaseConnection {
         while (resultSet.next()) {
             lanID = resultSet.getInt("lan_Id");
         }
+
+        String sql = "SELECT * FROM kund WHERE kund_Id = (?)";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, kundIDcurr);
+
+        resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            gottenRole = resultSet.getString("kund_Typ"); // Assuming "role" is the column name for the role in the table
+            gottenAge = resultSet.getInt("age"); // Assuming "age" is the column name for the age in the table
+        }
+        System.out.println(gottenRole);
+        System.out.println(gottenAge);
+
+        LoanLimitCurr = calculateLoanLimit(gottenRole);
+
         String[] loneArray = lone.split("\n");
         for (int i = 0; i < loneArray.length; i++) {
+            if(calculateEntryCount(lanID) >= LoanLimitCurr){
+                System.out.println("Max Loanes achived");
+                return;
+            }
+
             if (loneArray[i].startsWith("Book: ")) {
                 String updatedString = loneArray[i].replaceFirst("Book: ", "");
                 updatedString = updatedString.substring(0, updatedString.length() - 7).trim();
-                System.out.println("Updated string (Book): " + updatedString);
 
                 try {
-                    Statement statement = conn.createStatement();
+                    Statement statement2 = conn.createStatement();
 
                     String query = "SELECT kategori, barcode_Bok, bok_Namn FROM Bok";
-                    resultSet = statement.executeQuery(query);
+                    resultSet = statement2.executeQuery(query);
 
                     while (resultSet.next()) {
                         String nammmn = resultSet.getString("bok_Namn");
@@ -358,19 +367,21 @@ public class DatabaseConnection {
                     e.printStackTrace();
                 }
 
+
+
                 String insertQuery = "INSERT INTO Bok_Lan (datum_Utlanad, datum_Faktisk_retur, skuld, bok_Status, barcode_Bok, lan_Id) VALUES (?, ?, ?, ?, ?, ?)";
 
-                try (PreparedStatement statement = conn.prepareStatement(insertQuery)) {
+                try (PreparedStatement statement3 = conn.prepareStatement(insertQuery)) {
                     Date InDate = calcReturnDate(kategoriAddLoan);
                     LocalDate currentDate = LocalDate.now();
-                    statement.setDate(1, Date.valueOf(currentDate)); // Replace with the actual date of borrowing
-                    statement.setDate(2, InDate); // Replace with the actual return date
-                    statement.setInt(3, 0); // Replace with the actual value for "skuld"
-                    statement.setString(4, "Aktiv"); // Replace with the actual value for "bok_Status"
-                    statement.setString(5, barcodeAddLoan);
-                    statement.setInt(6, lanID);
+                    statement3.setDate(1, Date.valueOf(currentDate)); // Replace with the actual date of borrowing
+                    statement3.setDate(2, InDate); // Replace with the actual return date
+                    statement3.setInt(3, 0); // Replace with the actual value for "skuld"
+                    statement3.setString(4, "Aktiv"); // Replace with the actual value for "bok_Status"
+                    statement3.setString(5, barcodeAddLoan);
+                    statement3.setInt(6, lanID);
 
-                    int rowsAffected = statement.executeUpdate();
+                    int rowsAffected = statement3.executeUpdate();
                     System.out.println(rowsAffected + " row(s) inserted into Bok_Lan table.");
 
                 } catch (SQLException e) {
@@ -379,54 +390,57 @@ public class DatabaseConnection {
             }if(loneArray[i].startsWith("DVD: ")){
                 String updatedString = loneArray[i].replaceFirst("DVD: ", "");
                 updatedString = updatedString.substring(0, updatedString.length() - 7).trim();
-                System.out.println("Updated string (DVD): " + updatedString);
 
                 try {
-                    Statement statement = conn.createStatement();
+                    Statement statement4 = conn.createStatement();
 
                     String query = "SELECT aldersgrans, barcode_DVD, dvd_Namn FROM dvd";
-                    resultSet = statement.executeQuery(query);
+                    resultSet = statement4.executeQuery(query);
 
                     while (resultSet.next()) {
                         String nammmn = resultSet.getString("dvd_Namn");
-                        String agelimit = resultSet.getString("aldersgrans");
+                        int agelimitCurrHolder = resultSet.getInt("aldersgrans");
                         String barcode = resultSet.getString("barcode_DVD");
                         if(nammmn.equals(updatedString)) {
                             barcodeAddLoan = barcode;
+                            agelimitCurr = agelimitCurrHolder;
                         }
-                        //ADD CHECK FOR AGE LIMIT
-                        //ADD CHECK FOR LOAN LIMIT
+
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                if(agelimitCurr >= gottenAge){
+                    System.out.println("age limit reached, aborting this loan");
+                    skipNextLoan = true;
+                }
 
                 String insertQuery = "INSERT INTO DVD_Lan (datum_Utlanad, datum_Faktisk_retur, skuld, dvd_Status, barcode_DVD, lan_Id) " +
                         "VALUES (?, ?, ?, ?, ?, ?)";
+                if(!skipNextLoan){
 
-                try (PreparedStatement statement = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+                try (PreparedStatement statement5 = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
                     Date borrowDate = Date.valueOf(LocalDate.now()); // Replace with the actual borrow date
                     Date returnDate = calcReturnDate("dvd"); // Replace with the actual return date
 
-                    statement.setDate(1, borrowDate);
-                    statement.setDate(2, returnDate);
-                    statement.setInt(3, 0); // Replace with the actual value for "skuld"
-                    statement.setString(4, "Aktiv"); // Replace with the actual value for "dvd_Status"
-                    statement.setString(5, barcodeAddLoan);
-                    statement.setInt(6, lanID); // Replace with the actual value for "lan_Id"
+                    statement5.setDate(1, borrowDate);
+                    statement5.setDate(2, returnDate);
+                    statement5.setInt(3, 0); // Replace with the actual value for "skuld"
+                    statement5.setString(4, "Aktiv"); // Replace with the actual value for "dvd_Status"
+                    statement5.setString(5, barcodeAddLoan);
+                    statement5.setInt(6, lanID); // Replace with the actual value for "lan_Id"
 
-                    int rowsAffected = statement.executeUpdate();
-                    System.out.println(rowsAffected + " row(s) inserted into Bok_Lan table.");
+                    int rowsAffected = statement5.executeUpdate();
+                    System.out.println(rowsAffected + " row(s) inserted into DVD_Lan table.");
 
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    }
                 }
+                skipNextLoan = false;
             }
 
-
-
         }
-//
 
     }
     public static Date calcReturnDate(String kategoriAddLoan) {
@@ -455,34 +469,39 @@ public class DatabaseConnection {
 
     }
 
+    public int calculateLoanLimit(String occupation) {
+        int loanLimit;
 
-
-
-
-
-
-//            String sql = "INSERT INTO lan (lan_Id, kund_Id, datum_Lan, datum_Faktisk_retur) VALUES (?, ?, ?, ?)";
-//            try {
-//                PreparedStatement statement = conn.prepareStatement(sql);
-//                statement.setInt(1, Integer.parseInt(loneArray2[0]));
-//                statement.setInt(2, Integer.parseInt(loneArray2[1]));
-//                statement.setString(3, loneArray2[2]);
-//                statement.setString(4, loneArray2[3]);
-//                statement.executeUpdate();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-
-
-
-
+        if (occupation.equalsIgnoreCase("teacher")) {
+            loanLimit = 20;
+        } else if (occupation.equalsIgnoreCase("student")) {
+            loanLimit = 10;
+        } else {
+            loanLimit = 5; // Assuming the default loan limit for other occupations is 5
+        }
+        return loanLimit;
     }
 
+    public int calculateEntryCount(int lanId) {
+        int entryCount = 0;
 
+        try {
+            String sql = "SELECT COUNT(*) AS entryCount FROM Bok_Lan WHERE lan_Id = ? UNION ALL " +
+                    "SELECT COUNT(*) AS entryCount FROM DVD_Lan WHERE lan_Id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, lanId);
+            statement.setInt(2, lanId);
 
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                entryCount += resultSet.getInt("entryCount");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        return entryCount;
+    }
 
-
-
-
+}
