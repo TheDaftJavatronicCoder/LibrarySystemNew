@@ -100,8 +100,15 @@ public class LoginController {
 
         String role = this.roleTextField.getText();
         String username = this.usernameTextField1.getText();
+
+        if (!role.equals("Student") && !role.equals("Teacher") && !role.equals("Scientist")){
+            usernameTaken1.setText("Invalid role! Please choose from Student, Teacher, or Scientist. ");
+            return;
+        }
+
         if (DatabaseConnection.checkUsername(username)){
             usernameTaken1.setText("Username is already taken!");
+            return;
         }
 
         String pass = this.passwordTextField1.getText();

@@ -22,12 +22,14 @@
             </Label>
          </children>
       </AnchorPane>
-      <TextField fx:id="emailTextField" layoutX="15.0" layoutY="142.0" prefHeight="159.0" prefWidth="573.0" />
-      <Button fx:id="getEmailButton" layoutX="195.0" layoutY="334.0" mnemonicParsing="false" onAction="#sendReminder" style="-fx-background-color: #263F70;" text="GET EMAIL" textFill="WHITE">
+      <TextField fx:id="emailTextField" layoutX="94.0" layoutY="178.0" prefHeight="123.0" prefWidth="415.0" />
+      <Button fx:id="getEmailButton" layoutX="190.0" layoutY="334.0" mnemonicParsing="false" onAction="#sendReminder" style="-fx-background-color: #263F70;" text="GET EMAIL" textFill="WHITE">
          <font>
             <Font name="Symbol" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="sendEmailButton" layoutX="326.0" layoutY="333.0" mnemonicParsing="false" style="-fx-background-color: #263F70;" text="SEND EMAIL" textFill="WHITE" />
+      <Button fx:id="sendEmailButton" layoutX="326.0" layoutY="333.0" mnemonicParsing="false" onAction="#sendReminderButton" style="-fx-background-color: #263F70;" text="SEND EMAIL" textFill="WHITE" />
+      <Label fx:id="sentEmailLabel" layoutX="282.0" layoutY="151.0" textFill="#9beb4f" />
+      
    </children>
 </AnchorPane>
