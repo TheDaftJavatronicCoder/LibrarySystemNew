@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+
 <AnchorPane prefHeight="435.0" prefWidth="638.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.CheckoutController">
    <children>
       <VBox prefHeight="435.0" prefWidth="169.0" style="-fx-background-color: #263f73;">
