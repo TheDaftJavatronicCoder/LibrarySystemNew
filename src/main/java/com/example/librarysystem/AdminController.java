@@ -118,7 +118,7 @@ public class AdminController implements Initializable {
         String barcode_Bok = this.bookBarcodeTextField1.getText();
         DatabaseConnection databas5 = null;
         if (databas5.checkBarcode_Bok(barcode_Bok)) {
-            System.out.println("Username already taken");
+            System.out.println("BARCODE IS ALREADY IN USE");
             return;
         }
 
@@ -170,7 +170,7 @@ public class AdminController implements Initializable {
         String barcode_DVD = this.DVDBarcodeTextField.getText();
         DatabaseConnection databas6 = null;
         if (databas6.checkBarcode_DVD(barcode_DVD)) {
-            System.out.println("Username already taken");
+            System.out.println("BARCODE IS ALREADY IN USE");
             return;
         }
 
