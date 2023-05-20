@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException {
 
-            Parent root = FXMLLoader.load(getClass().getResource("reminderview.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("startpage.fxml"));
             Scene scene = new Scene(root);
             stage.setTitle("LTU Library System");
             stage.setScene(scene);
@@ -21,8 +21,6 @@ public class Main extends Application {
             DatabaseConnection databaseConnection = new DatabaseConnection();
             databaseConnection.connect();
         }
-
-
 
 
     public static void main(String[] args) {
