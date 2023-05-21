@@ -61,6 +61,8 @@ public class LoanController implements Initializable {
 
     private static String showLoan = "";
 
+    private boolean wantReserve;
+
 
 
 
@@ -95,6 +97,11 @@ public class LoanController implements Initializable {
 
     }
 
+    @FXML
+    public void ReserveItems(){
+        wantReserve = true;
+    }
+
 
     @FXML
     private void handleClicks(ActionEvent event) {
@@ -125,7 +132,12 @@ gpReturnLoan.toFront();
     }
 
     public void switchToCheckout() throws IOException, SQLException {
-        new DatabaseConnection().addNewLoan(showLoan);
+        new DatabaseConnection().addNewLoan(showLoan, wantReserve);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("checkout.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) startPageButton2.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
     }
 
 

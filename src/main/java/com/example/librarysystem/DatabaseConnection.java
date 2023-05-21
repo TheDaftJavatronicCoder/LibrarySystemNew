@@ -12,7 +12,7 @@ public class DatabaseConnection {
     static Connection conn = null;
     static Statement st = null;
 
-     int kundIDcurr = 6;
+     int kundIDcurr = 3;
      int lanID = 0;
 
     String barcodeAddLoan = "";
@@ -26,10 +26,11 @@ public class DatabaseConnection {
 
     boolean skipNextLoan = false;
 
+    boolean WantToReserve = false;
     int agelimitCurr;
 
     public static void connect() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/Testingbase2"; // Replace with your database URL
+        String url = "jdbc:mysql://localhost:3306/Testingbase3"; // Replace with your database URL
         String username = "root"; // Replace with your MySQL username
         String password = "admin"; // Replace with your MySQL password
 
@@ -178,42 +179,54 @@ public class DatabaseConnection {
 
 
     public String getLoanInfo() throws SQLException {
-        String sql = "SELECT * FROM bok_lan JOIN lan JOIN bok WHERE lan.lan_Id = bok_lan.lan_Id AND" +
-                " lan.kund_Id = 2 AND bok.barcode_Bok = bok_lan.barcode_Bok;";
+        String sql = "SELECT * FROM Bok_Lan bl " +
+                "JOIN Lan l ON l.lan_Id = bl.lan_Id " +
+                "JOIN Bok b ON b.barcode_Bok = bl.barcode_Bok " +
+                "WHERE l.kund_Id = ? " +
+                "AND DATE(bl.datum_Utlanad) = CURDATE() " +
+                "AND (bl.bok_Status = 'Aktiv' OR bl.bok_Status = 'Reserverad')";
+
+
         PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, kundIDcurr);
         ResultSet resultSet = statement.executeQuery();
 
-        List<String> resultList = new ArrayList<>();
+
         String fullresult = "";
 
         while (resultSet.next()) {
             String nameBok = resultSet.getString("bok_Namn");
             String barcodeBok = resultSet.getString("barcode_Bok");
-            String datumFaktiskRetur = resultSet.getString("datum_Faktisk_retur");
+            String datumPlanRetur = resultSet.getString("datum_Planerad_return");
             String bokStatus = resultSet.getString("bok_Status");
-            String skuldString = String.valueOf(resultSet.getInt("skuld"));
 
 
-            String result = String.format("Titel: "+nameBok+ "\nBarcode: "+ barcodeBok+ "\nRetur Datum: "+  datumFaktiskRetur+
-                    "\nStatus: "+  bokStatus+ "\nSkuld: "+  skuldString);
+            String result = String.format("Titel: "+nameBok+ "\nBarcode: "+ barcodeBok+ "\nRetur Datum: "+  datumPlanRetur+
+                    "\nStatus: "+  bokStatus);
             fullresult = fullresult +  result + "\n" + "---------------------------------------------------------" + "\n";
 
         }
-        sql = "SELECT * FROM dvd_lan JOIN lan JOIN dvd WHERE lan.lan_Id = dvd_lan.lan_Id AND" +
-                " lan.kund_Id = 2 AND dvd.barcode_DVD = dvd_lan.barcode_DVD";
+        sql = "SELECT * FROM DVD_Lan dl " +
+                "JOIN Lan l ON l.lan_Id = dl.lan_Id " +
+                "JOIN DVD d ON d.barcode_DVD = dl.barcode_DVD " +
+                "WHERE l.kund_Id = ? " +
+                "AND DATE(dl.datum_Utlanad) = CURDATE() " +
+                "AND (dl.dvd_Status = 'Aktiv' OR dl.dvd_Status = 'Reserverad')";
+
         statement = conn.prepareStatement(sql);
+        statement.setInt(1, kundIDcurr);
         resultSet = statement.executeQuery();
 
 
         while (resultSet.next()) {
             String namedvd = resultSet.getString("dvd_Namn");
             String barcodeDVD = resultSet.getString("barcode_DVD");
-            String datumFaktiskRetur = resultSet.getString("datum_Faktisk_retur");
+            String datumPlanRetur = resultSet.getString("datum_Planerad_return");
             String DVDStatus = resultSet.getString("dvd_Status");
             String skuldString = String.valueOf(resultSet.getInt("skuld"));
 
-            String result = String.format("Titel: "+namedvd+ "\nBarcode: "+ barcodeDVD+ "\nRetur Datum: "+  datumFaktiskRetur+
-                    "\nStatus: "+  DVDStatus+ "\nSkuld: "+  skuldString);
+            String result = String.format("Titel: "+namedvd+ "\nBarcode: "+ barcodeDVD+ "\nRetur Datum: "+  datumPlanRetur+
+                    "\nStatus: "+  DVDStatus);
             fullresult = fullresult +  result + "\n" + "---------------------------------------------------------" + "\n";
         }
         return fullresult;
@@ -224,7 +237,7 @@ public class DatabaseConnection {
         String result = "";
         String sql = "SELECT epost FROM kund JOIN lan ON kund.kund_Id = lan.kund_Id JOIN bok_lan ON" +
                 " lan.lan_Id = bok_lan.lan_Id JOIN dvd_lan ON lan.lan_Id = dvd_lan.lan_Id WHERE" +
-                " (dvd_lan.datum_Faktisk_retur <= CURDATE() OR bok_lan.datum_Faktisk_retur <= CURDATE())";
+                " (dvd_lan.datum_Planerad_return <= CURDATE() OR bok_lan.datum_Planerad_return <= CURDATE())";
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -299,9 +312,10 @@ public class DatabaseConnection {
         return false;
     }
 
-    public void addNewLoan(String lone) throws SQLException {
+    public void addNewLoan(String lone, boolean bool) throws SQLException {
         ResultSet resultSet = st.executeQuery("SELECT kund_Id FROM lan");
         boolean controllLan = true;
+        WantToReserve = bool;
         while (resultSet.next()) {
             int gottenId = resultSet.getInt("kund_Id");
             if (kundIDcurr == gottenId) {
@@ -369,17 +383,24 @@ public class DatabaseConnection {
 
 
 
-                String insertQuery = "INSERT INTO Bok_Lan (datum_Utlanad, datum_Faktisk_retur, skuld, bok_Status, barcode_Bok, lan_Id) VALUES (?, ?, ?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO Bok_Lan (datum_Utlanad, datum_Planerad_return, datum_Faktisk_retur, skuld, bok_Status, barcode_Bok, lan_Id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
                 try (PreparedStatement statement3 = conn.prepareStatement(insertQuery)) {
                     Date InDate = calcReturnDate(kategoriAddLoan);
                     LocalDate currentDate = LocalDate.now();
                     statement3.setDate(1, Date.valueOf(currentDate)); // Replace with the actual date of borrowing
                     statement3.setDate(2, InDate); // Replace with the actual return date
-                    statement3.setInt(3, 0); // Replace with the actual value for "skuld"
-                    statement3.setString(4, "Aktiv"); // Replace with the actual value for "bok_Status"
-                    statement3.setString(5, barcodeAddLoan);
-                    statement3.setInt(6, lanID);
+                    statement3.setDate(3, null); // Replace with the actual value for "datum_Faktisk_retur"
+                    statement3.setInt(4, 0); // Replace with the actual value for "skuld"
+                    statement3.setString(5, "Aktiv"); // Replace with the actual value for "bok_Status"
+                    statement3.setString(6, barcodeAddLoan);
+                    statement3.setInt(7, lanID);
+
+                    if(WantToReserve){
+                        statement3.setDate(1, null);
+                        statement3.setDate(2, null);
+                        statement3.setString(5, "Reserverad");
+                    }
 
                     int rowsAffected = statement3.executeUpdate();
                     System.out.println(rowsAffected + " row(s) inserted into Bok_Lan table.");
@@ -415,8 +436,8 @@ public class DatabaseConnection {
                     skipNextLoan = true;
                 }
 
-                String insertQuery = "INSERT INTO DVD_Lan (datum_Utlanad, datum_Faktisk_retur, skuld, dvd_Status, barcode_DVD, lan_Id) " +
-                        "VALUES (?, ?, ?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO DVD_Lan (datum_Utlanad, datum_Planerad_return, datum_Faktisk_retur, skuld, dvd_Status, barcode_DVD, lan_Id) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
                 if(!skipNextLoan){
 
                 try (PreparedStatement statement5 = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
@@ -425,10 +446,17 @@ public class DatabaseConnection {
 
                     statement5.setDate(1, borrowDate);
                     statement5.setDate(2, returnDate);
-                    statement5.setInt(3, 0); // Replace with the actual value for "skuld"
-                    statement5.setString(4, "Aktiv"); // Replace with the actual value for "dvd_Status"
-                    statement5.setString(5, barcodeAddLoan);
-                    statement5.setInt(6, lanID); // Replace with the actual value for "lan_Id"
+                    statement5.setDate(3, null); // Replace with the actual value for "datum_Faktisk_retur"
+                    statement5.setInt(4, 0); // Replace with the actual value for "skuld"
+                    statement5.setString(5, "Aktiv"); // Replace with the actual value for "dvd_Status"
+                    statement5.setString(6, barcodeAddLoan);
+                    statement5.setInt(7, lanID); // Replace with the actual value for "lan_Id"
+
+                    if(WantToReserve){
+                        statement5.setDate(1, null);
+                        statement5.setDate(2, null);
+                        statement5.setString(5, "Reserverad");
+                    }
 
                     int rowsAffected = statement5.executeUpdate();
                     System.out.println(rowsAffected + " row(s) inserted into DVD_Lan table.");
@@ -447,14 +475,12 @@ public class DatabaseConnection {
         LocalDate currentDate = LocalDate.now();
 
         if (kategoriAddLoan.equals("skönlitterär")) {
-            System.out.println("found skönlitterär");
             // Add 2 weeks to the current date
-            LocalDate returnDate = currentDate.plus(2, ChronoUnit.WEEKS);
+            LocalDate returnDate = currentDate.plus(4, ChronoUnit.WEEKS);
             return Date.valueOf(returnDate);
         } else if (kategoriAddLoan.equals("skolbok")) {
-            System.out.println("found skolbok");
             // Add 1 week to the current date
-            LocalDate returnDate = currentDate.plus(1, ChronoUnit.WEEKS);
+            LocalDate returnDate = currentDate.plus(2, ChronoUnit.WEEKS);
             return Date.valueOf(returnDate);
         } else if (kategoriAddLoan.equals("dvd")) {
             // Return current date without any addition
@@ -486,8 +512,8 @@ public class DatabaseConnection {
         int entryCount = 0;
 
         try {
-            String sql = "SELECT COUNT(*) AS entryCount FROM Bok_Lan WHERE lan_Id = ? UNION ALL " +
-                    "SELECT COUNT(*) AS entryCount FROM DVD_Lan WHERE lan_Id = ?";
+            String sql = "SELECT COUNT(*) AS entryCount FROM Bok_Lan WHERE lan_Id = ? AND bok_Status = 'Aktiv' UNION ALL " +
+                    "SELECT COUNT(*) AS entryCount FROM DVD_Lan WHERE lan_Id = ? AND dvd_Status = 'Aktiv'";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, lanId);
             statement.setInt(2, lanId);
@@ -504,4 +530,25 @@ public class DatabaseConnection {
         return entryCount;
     }
 
+    public void returnLoan(String savedbarcode){
+
+        try {
+            String sql = "UPDATE bok_lan SET bokstatus = 'Returnerad', faktisk_retur = ? " +
+                    "WHERE kund_id = ? AND bokstatus = 'Aktiv' AND barcode = ?";
+
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(LocalDate.now()));
+            statement.setInt(2, kundIDcurr);
+            statement.setString(3, savedbarcode);
+
+            int rowsAffected = statement.executeUpdate();
+
+            System.out.println(rowsAffected + " row(s) updated successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
