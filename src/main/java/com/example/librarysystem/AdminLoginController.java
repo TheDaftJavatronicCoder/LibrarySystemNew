@@ -64,12 +64,15 @@ public class AdminLoginController {
     }
 
         @FXML
-    public void cancelButtonOnAction(ActionEvent e) {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+    public void cancelButtonOnAction(ActionEvent e) throws IOException {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("startpage.fxml"));
+            Parent myPagesParent = fxmlLoader.load();
+            Scene myPagesScene = new Scene(myPagesParent);
+            Stage currentStage = (Stage) cancelButton.getScene().getWindow();
+            currentStage.setScene(myPagesScene);
     }
 
-        }
+}
 
 
 
