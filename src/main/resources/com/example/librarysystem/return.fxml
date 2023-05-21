@@ -28,5 +28,6 @@
       </Label>
       <TextArea fx:id="TextFieldReturn" layoutX="199.0" layoutY="209.0" prefHeight="114.0" prefWidth="200.0" />
       <Label fx:id="successfulLabel" layoutX="348.0" layoutY="339.0" prefHeight="17.0" prefWidth="103.0" />
+      <Button fx:id="returnButton1" layoutX="54.0" layoutY="240.0" mnemonicParsing="false" onAction="#goToHome" style="-fx-background-color: #263F70;" text="Startpage" textAlignment="CENTER" textFill="WHITE" />
    </children>
 </AnchorPane>

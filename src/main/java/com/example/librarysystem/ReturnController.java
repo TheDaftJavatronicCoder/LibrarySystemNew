@@ -1,10 +1,17 @@
 package com.example.librarysystem;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class ReturnController {
 
@@ -41,9 +48,14 @@ public class ReturnController {
         }
     }
 
-    private boolean performReturn() {
-        // Perform the return operation here
-        // Return true if successful, false otherwise
-        return true; // Placeholder value, replace with your actual implementation
+    public void goToHome() throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("startpage.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) returnButton.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
     }
+
+
+
 }
