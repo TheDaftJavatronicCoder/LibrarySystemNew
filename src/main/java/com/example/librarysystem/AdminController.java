@@ -106,11 +106,110 @@ public class AdminController implements Initializable {
     @FXML
     private Button startPageButton;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+    @FXML
+    private void updateBokClass() throws SQLException {
+        String barcode_Bok = this.bookBarcodeTextField1.getText();
+        String bok_Namn = this.bookNameTextField1.getText();
+        int bok_Ar = 0;
+        String bok_ArReal = this.bookRealeseYearTextField1.getText();
+
+        try {
+            bok_Ar = Integer.parseInt(bok_ArReal);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String bok_Genre = this.bookGenreTextField1.getText();
+        String kategori = this.bookCategoryTextField1.getText();
+        String bok_Forfattare = this.bookAuthorTextField1.getText();
+
+        int hyllaReal = 0;
+        String hylla = this.bookShelfTextField1.getText();
+
+        try {
+            hyllaReal = Integer.parseInt(hylla);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int antal_Kopior_InneReal = 0;
+        String antal_Kopior_Inne = this.bookCopiesTextField1.getText();
+
+        try {
+            antal_Kopior_InneReal = Integer.parseInt(antal_Kopior_Inne);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String ISBN = this.bookISBNTextField1.getText();
+
+        DatabaseConnection database = new DatabaseConnection();
+        database.updateBok(barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, hyllaReal, antal_Kopior_InneReal, ISBN);
+    }
+
+
+    @FXML
+    private void updateDVDClass() throws SQLException {
+        String barcodeDVD = this.DVDBarcodeTextField.getText();
+        String dvdNamn = this.DVDNameTextFIeld.getText();
+        int dvdAr = 0;
+        String dvdArReal = this.DVDRealeseYearTextField.getText();
+
+        try {
+            dvdAr = Integer.parseInt(dvdArReal);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String dvdGenre = this.DVDGenreTextField.getText();
+        String dvdRegissor = this.DVDDirectorTextButton.getText();
+
+        int aldersgransReal = 0;
+        String aldersgrans = this.DVDAgeRestrictionTextField.getText();
+
+        try {
+            aldersgransReal = Integer.parseInt(aldersgrans);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int hyllaReal = 0;
+        String hylla = this.DVDShelfTesxtField.getText();
+
+        try {
+            hyllaReal = Integer.parseInt(hylla);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int antalKopiorInneReal = 0;
+        String antalKopiorInne = this.DVDCopiesTextField.getText();
+
+        try {
+            antalKopiorInneReal = Integer.parseInt(antalKopiorInne);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        DatabaseConnection database = new DatabaseConnection();
+        database.updateDVD(barcodeDVD, dvdNamn, dvdAr, dvdGenre, dvdRegissor, aldersgransReal, hyllaReal, antalKopiorInneReal);
+    }
+
+
+
+
 
 
     @FXML

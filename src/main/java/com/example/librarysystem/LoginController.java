@@ -73,7 +73,8 @@ public class LoginController {
     protected void onLoginClick(ActionEvent e) throws SQLException, IOException {
         String creditNam = this.usernameTextField.getText();
         String creditPass = this.passwordTextField.getText();
-        if (DatabaseConnection.signIn(creditNam, creditPass)) {
+        DatabaseConnection dbcon = new DatabaseConnection();
+        if (dbcon.signIn(creditNam, creditPass)) {
             usernameTaken1.setText("Login successful");
             this.continueToLoan();
         } else {

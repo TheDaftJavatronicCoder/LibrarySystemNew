@@ -3,8 +3,6 @@ package com.example.librarysystem;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseConnection {
     static String name = "";
@@ -12,22 +10,22 @@ public class DatabaseConnection {
     static Connection conn = null;
     static Statement st = null;
 
-     int kundIDcurr = 3;
-     int lanID = 0;
+    private static int kundIDcurr = 0;
+    private int lanID = 0;
 
-    String barcodeAddLoan = "";
+    private String barcodeAddLoan = "";
 
-    String kategoriAddLoan = "";
+    private String kategoriAddLoan = "";
 
-    String gottenRole = "";
-    int gottenAge = 0;
+    private String gottenRole = "";
+    private int gottenAge = 0;
 
-    int LoanLimitCurr = 0;
+    private int LoanLimitCurr = 0;
 
-    boolean skipNextLoan = false;
+    private boolean skipNextLoan = false;
 
-    boolean WantToReserve = false;
-    int agelimitCurr;
+    private boolean WantToReserve = false;
+    private int agelimitCurr;
 
     public static void connect() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/Testingbase3"; // Replace with your database URL
@@ -53,17 +51,25 @@ public class DatabaseConnection {
         st.close();
     }
 
-    public static boolean signIn(String uN, String uP) throws SQLException {
-        ResultSet resultSet = st.executeQuery("SELECT kund_Username,kund_Password FROM kund");
+    public boolean signIn(String uN, String uP) throws SQLException {
+        ResultSet resultSet = st.executeQuery("SELECT kund_Username,kund_Password, kund_Id FROM kund");
         while (resultSet.next()) {
+            kundIDcurr = resultSet.getInt("kund_Id");
             String username = resultSet.getString("kund_Username");
             String password = resultSet.getString("kund_Password");
+
+
             if (username.equals(uN) && password.equals(uP)) {
+                resultSet = st.executeQuery("SELECT lan_Id FROM lan WHERE lan.kund_Id = "+kundIDcurr);
+                while (resultSet.next()) {
+                    lanID = resultSet.getInt("lan_Id");
+                }
                 return true;
             }
         }
         return false;
     }
+
 
 
     public static String searchBook(String term) {
@@ -300,6 +306,51 @@ public class DatabaseConnection {
         }
     }
 
+    public void updateBok(String barcode_Bok, String bok_Namn, int bok_Ar, String bok_Genre, String kategori, String bok_Forfattare, int hylla, int antal_Kopior_Inne, String ISBN) throws SQLException {
+        String UPDATE_QUERY2 = "UPDATE your_table_name SET bok_Namn=?, bok_Ar=?, bok_Genre=?, kategori=?, bok_Forfattare=?, hylla=?, antal_Kopior_Inne=?, ISBN=? WHERE barcode_Bok=?";
+
+        PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY2);
+        statement.setString(1, bok_Namn);
+        statement.setInt(2, bok_Ar);
+        statement.setString(3, bok_Genre);
+        statement.setString(4, kategori);
+        statement.setString(5, bok_Forfattare);
+        statement.setInt(6, hylla);
+        statement.setInt(7, antal_Kopior_Inne);
+        statement.setString(8, ISBN);
+        statement.setString(9, barcode_Bok);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            System.out.println("Book updated successfully");
+        } else {
+            System.out.println("Failed to update book");
+        }
+    }
+
+    public void updateDVD(String barcode_DVD, String dvd_Namn, int dvd_Ar, String dvd_Genre, String dvd_Regissor, int aldersgrans, int hylla, int Antal_Kopior_Inne) throws SQLException {
+        String UPDATE_QUERY3 = "UPDATE DVD SET dvd_Namn=?, dvd_Ar=?, dvd_Genre=?, dvd_Regissor=?, aldersgrans=?, hylla=?, antal_Kopior_Inne=? WHERE barcode_DVD=?";
+
+        PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY3);
+        statement.setString(1, dvd_Namn);
+        statement.setInt(2, dvd_Ar);
+        statement.setString(3, dvd_Genre);
+        statement.setString(4, dvd_Regissor);
+        statement.setInt(5, aldersgrans);
+        statement.setInt(6, hylla);
+        statement.setInt(7, Antal_Kopior_Inne);
+        statement.setString(8, barcode_DVD);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            System.out.println("DVD updated successfully");
+        } else {
+            System.out.println("Failed to update DVD");
+        }
+    }
+
     public static boolean checkBarcode_DVD(String barcodeBok) throws SQLException {
         ResultSet resultSet = st.executeQuery("SELECT barcode_DVD FROM DVD");
         while (resultSet.next()) {
@@ -312,6 +363,9 @@ public class DatabaseConnection {
     }
 
     public void addNewLoan(String lone, boolean bool) throws SQLException {
+        if(kundIDcurr == 0){
+            System.out.println("you need to log in, in order to loan");
+        }
         ResultSet resultSet = st.executeQuery("SELECT kund_Id FROM lan");
         boolean controllLan = true;
         WantToReserve = bool;
@@ -529,24 +583,52 @@ public class DatabaseConnection {
         return entryCount;
     }
 
-    public void returnLoan(String savedbarcode){
+    public boolean returnLoan(String savedbarcode){
 
-        try {
-            String sql = "UPDATE bok_lan SET bokstatus = 'Returnerad', faktisk_retur = ? " +
-                    "WHERE kund_id = ? AND bokstatus = 'Aktiv' AND barcode = ?";
+        String barcodesReturn[] = savedbarcode.split("\n");
+        for (int i = 0; i < barcodesReturn.length; i++) {
+            savedbarcode = barcodesReturn[i];
 
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setDate(1, Date.valueOf(LocalDate.now()));
-            statement.setInt(2, kundIDcurr);
-            statement.setString(3, savedbarcode);
+            try {
+                String sql = "UPDATE bok_lan SET bok_Status = 'Returnerad', datum_Faktisk_retur = ? " +
+                        "WHERE lan_Id = ? AND bok_Status = 'Aktiv' AND barcode_Bok = ?";
 
-            int rowsAffected = statement.executeUpdate();
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setDate(1, Date.valueOf(LocalDate.now()));
+                statement.setInt(2, kundIDcurr);
+                statement.setString(3, savedbarcode);
 
-            System.out.println(rowsAffected + " row(s) updated successfully.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+                int rowsAffectedLoan = 0;
+                rowsAffectedLoan = statement.executeUpdate();
+                System.out.println(rowsAffectedLoan + " row(s) updated successfully.");
+                if (rowsAffectedLoan != 0) {
+                    rowsAffectedLoan = 0;
+                    return true;
+                }
+                sql = "UPDATE dvd_lan SET dvd_Status = 'Returnerad', datum_Faktisk_retur = ? " +
+                        "WHERE lan_Id = ? AND dvd_Status = 'Aktiv' AND barcode_DVD = ?";
+
+                statement.setDate(1, Date.valueOf(LocalDate.now()));
+                statement.setInt(2, kundIDcurr);
+                statement.setString(3, savedbarcode);
+
+                rowsAffectedLoan = 0;
+                rowsAffectedLoan = statement.executeUpdate();
+                System.out.println(rowsAffectedLoan + " row(s) updated successfully.");
+                if (rowsAffectedLoan != 0) {
+                    rowsAffectedLoan = 0;
+                    return true;
+                }
+
+                return false;
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
         }
+        return false;
     }
+
 
 }
 

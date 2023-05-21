@@ -3,29 +3,36 @@ package com.example.librarysystem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class ReturnController {
 
     @FXML
     private Label successfulLabel;
-    @FXML
-    private Label unsuccessfulLabel;
+
     @FXML
     private Button returnButton;
+
+    @FXML
+    private TextArea TextFieldReturn;
+
+    private String barcodeItem;
 
     public ReturnController(){
     }
 
     @FXML
     private void returnButtonAction(){
-        boolean isSuccess = performReturn(); // Call a method to perform the return operation and return a boolean indicating success or failure
+        barcodeItem = TextFieldReturn.getText();
+        System.out.println();
+        DatabaseConnection dbcon = new DatabaseConnection();
+        boolean isSuccess = dbcon.returnLoan(barcodeItem); // Call a method to perform the return operation and return a boolean indicating success or failure
 
         if (isSuccess) {
             successfulLabel.setText("Return successful!");
-            unsuccessfulLabel.setText("");
         } else {
             successfulLabel.setText("");
-            unsuccessfulLabel.setText("Return unsuccessful!");
         }
     }
 
