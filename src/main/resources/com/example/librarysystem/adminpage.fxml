@@ -25,7 +25,7 @@
                   <Font name="Big Caslon Medium" size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: transparent;" text="Delete object" textFill="WHITE">
+            <Button mnemonicParsing="false" onAction="#SwitchToDeletePage" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: transparent;" text="Delete object" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="13.0" />
                </font></Button>

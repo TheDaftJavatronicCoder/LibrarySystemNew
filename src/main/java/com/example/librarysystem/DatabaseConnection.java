@@ -30,7 +30,7 @@ public class DatabaseConnection {
 
     //If you want to connect with default credentials and url
     public static void connect() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/Testingbase3"; // Replace with your database URL
+        String url = "jdbc:mysql://localhost:3306/testbase1"; // Replace with your database URL
         String username = "root"; // Replace with your MySQL username
         String password = "admin"; // Replace with your MySQL password
 
@@ -62,7 +62,7 @@ public class DatabaseConnection {
     //Polymorphism if you want to connect with diffrent credentials only
 
     public static void connect(String username, String password) throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/Testingbase3"; // Replace with your database URL
+        String url = "jdbc:mysql://localhost:3306/testbase1"; // Replace with your database URL
 
         try {
             conn = DriverManager.getConnection(url, username, password);
@@ -180,15 +180,27 @@ public class DatabaseConnection {
 
     public static String RameinderEmail() throws SQLException {
         String result = "";
-        String sql = "SELECT epost FROM kund JOIN lan ON kund.kund_Id = lan.kund_Id JOIN bok_lan ON" +
-                " lan.lan_Id = bok_lan.lan_Id JOIN dvd_lan ON lan.lan_Id = dvd_lan.lan_Id WHERE" +
-                " (dvd_lan.datum_Planerad_return <= CURDATE() OR bok_lan.datum_Planerad_return <= CURDATE())";
+        String sql = "SELECT epost FROM kund " +
+                "JOIN lan ON kund.kund_Id = lan.kund_Id " +
+                "JOIN bok_lan ON lan.lan_Id = bok_lan.lan_Id " +
+                "WHERE bok_lan.datum_Planerad_return <= CURDATE() " +
+                "AND bok_lan.bok_Status = 'Aktiv'";
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             String emails = resultSet.getString("epost");
-            result = (result + emails + "\n");
-
+            result = result + emails + "\n";
+        }
+        sql = "SELECT epost FROM kund " +
+                "JOIN lan ON kund.kund_Id = lan.kund_Id " +
+                "JOIN dvd_lan ON lan.lan_Id = dvd_lan.lan_Id " +
+                "WHERE dvd_lan.datum_Planerad_return <= CURDATE() " +
+                "AND dvd_lan.dvd_Status = 'Aktiv'";
+        statement = conn.prepareStatement(sql);
+        resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            String emails = resultSet.getString("epost");
+            result = result + emails + "\n";
         }
         return result;
     }

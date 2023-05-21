@@ -99,6 +99,19 @@ public class AdminController implements Initializable {
     @FXML
     private GridPane gpAddDVD;
 
+    @FXML
+    private Button switchToDeletePage;
+
+
+    @FXML
+    private Label lblStatus;
+
+    @FXML
+    private Pane pnlStatus;
+
+    @FXML
+    private Button startPageButton;
+
 
 
     @FXML
@@ -110,14 +123,6 @@ public class AdminController implements Initializable {
     @FXML
     private Button updateBookButton;
 
-    @FXML
-    private Label lblStatus;
-
-    @FXML
-    private Pane pnlStatus;
-
-    @FXML
-    private Button startPageButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -360,7 +365,15 @@ public class AdminController implements Initializable {
             //handle addObjectButton
         }
 
+    }
 
+
+    public void SwitchToDeletePage() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("deleteObject.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) switchToDeletePage.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
     }
 
     public void switchToStartPage() throws IOException {

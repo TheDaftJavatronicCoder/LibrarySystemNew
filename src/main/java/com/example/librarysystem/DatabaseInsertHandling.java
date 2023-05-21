@@ -120,4 +120,34 @@ public class DatabaseInsertHandling extends DatabaseConnection{
         }
     }
 
+    public void deleteBook(String barcode_Bok) throws SQLException {
+        String DELETE_QUERY = "DELETE FROM Bok WHERE barcode_Bok=?";
+
+        PreparedStatement statement = conn.prepareStatement(DELETE_QUERY);
+        statement.setString(1, barcode_Bok);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            System.out.println("Book deleted successfully");
+        } else {
+            System.out.println("Failed to delete book");
+        }
+    }
+
+    public void deleteDVD(String barcode_Bok) throws SQLException {
+        String DELETE_QUERY = "DELETE FROM DVD WHERE barcode_DVD=?";
+
+        PreparedStatement statement = conn.prepareStatement(DELETE_QUERY);
+        statement.setString(1, barcode_Bok);
+
+        int rowsAffected = statement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            System.out.println("DVD deleted successfully");
+        } else {
+            System.out.println("Failed to delete DVD");
+        }
+    }
+
 }

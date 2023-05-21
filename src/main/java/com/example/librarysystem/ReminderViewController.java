@@ -3,6 +3,7 @@ package com.example.librarysystem;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 public class ReminderViewController {
 
     @FXML
-    private TextField emailTextField;
+    private TextArea emailTextField;
     @FXML
     private Button sendReminderButton;
     @FXML
@@ -23,7 +24,7 @@ public class ReminderViewController {
     private void sendReminder() throws SQLException {
         DatabaseConnection dbcon = new DatabaseConnection();
         String resultemail = dbcon.RameinderEmail();
-        this.emailTextField.setText(resultemail);
+        emailTextField.setText(resultemail);
     }
 
     @FXML
