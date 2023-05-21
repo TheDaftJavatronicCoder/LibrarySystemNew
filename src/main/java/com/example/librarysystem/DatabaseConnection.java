@@ -11,7 +11,7 @@ public class DatabaseConnection {
     protected static Statement st = null;
 
     protected static int kundIDcurr = 0;
-    protected int lanID = 0;
+    protected static int lanID = 0;
 
     protected String barcodeAddLoan = "";
 

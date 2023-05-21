@@ -239,7 +239,7 @@ public class DatabaseLoanHandling extends DatabaseConnection{
 
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setDate(1, Date.valueOf(LocalDate.now()));
-                statement.setInt(2, kundIDcurr);
+                statement.setInt(2, lanID);
                 statement.setString(3, savedbarcode);
 
                 int rowsAffectedLoan = 0;
