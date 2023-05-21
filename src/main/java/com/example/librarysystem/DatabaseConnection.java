@@ -223,7 +223,6 @@ public class DatabaseConnection {
             String barcodeDVD = resultSet.getString("barcode_DVD");
             String datumPlanRetur = resultSet.getString("datum_Planerad_return");
             String DVDStatus = resultSet.getString("dvd_Status");
-            String skuldString = String.valueOf(resultSet.getInt("skuld"));
 
             String result = String.format("Titel: "+namedvd+ "\nBarcode: "+ barcodeDVD+ "\nRetur Datum: "+  datumPlanRetur+
                     "\nStatus: "+  DVDStatus);
