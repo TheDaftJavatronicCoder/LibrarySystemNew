@@ -26,23 +26,35 @@ public class AdminController implements Initializable {
     @FXML
     private TextField DVDAgeRestrictionTextField;
 
+
     @FXML
     private TextField DVDBarcodeTextField;
+
+
 
     @FXML
     private TextField DVDCopiesTextField;
 
+
+
     @FXML
     private TextField DVDDirectorTextButton;
+
+
 
     @FXML
     private TextField DVDGenreTextField;
 
+
+
     @FXML
     private TextField DVDNameTextFIeld;
 
+
     @FXML
     private TextField DVDRealeseYearTextField;
+
+
 
     @FXML
     private TextField DVDShelfTesxtField;
@@ -80,10 +92,6 @@ public class AdminController implements Initializable {
     @FXML
     private TextField bookShelfTextField1;
 
-    @FXML
-    private Button feesButton;
-
-
 
     @FXML
     private GridPane gpAddBook;
@@ -91,11 +99,16 @@ public class AdminController implements Initializable {
     @FXML
     private GridPane gpAddDVD;
 
-    @FXML
-    private Button insertBookButton1;
+
 
     @FXML
     private Button insertDVDButton;
+
+   @FXML
+   private Button insertBookButton;
+
+    @FXML
+    private Button updateBookButton;
 
     @FXML
     private Label lblStatus;
@@ -105,7 +118,6 @@ public class AdminController implements Initializable {
 
     @FXML
     private Button startPageButton;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -162,6 +174,51 @@ public class AdminController implements Initializable {
         databas5 = new DatabaseConnection();
         databas5.insertBok(barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, HyllaReal, Antal_Kopior_InneReal, ISBN);
     }
+    @FXML
+    private void updateBokClass() throws SQLException {
+        String barcode_Bok = this.bookBarcodeTextField1.getText();
+        String bok_Namn = this.bookNameTextField1.getText();
+        int bok_Ar = 0;
+        String bok_ArReal = this.bookRealeseYearTextField1.getText();
+
+        try {
+            bok_Ar = Integer.parseInt(bok_ArReal);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String bok_Genre = this.bookGenreTextField1.getText();
+        String kategori = this.bookCategoryTextField1.getText();
+        String bok_Forfattare = this.bookAuthorTextField1.getText();
+
+        int hyllaReal = 0;
+        String hylla = this.bookShelfTextField1.getText();
+
+        try {
+            hyllaReal = Integer.parseInt(hylla);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int antal_Kopior_InneReal = 0;
+        String antal_Kopior_Inne = this.bookCopiesTextField1.getText();
+
+        try {
+            antal_Kopior_InneReal = Integer.parseInt(antal_Kopior_Inne);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String ISBN = this.bookISBNTextField1.getText();
+
+        DatabaseConnection database = new DatabaseConnection();
+        database.updateBok(barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, hyllaReal, antal_Kopior_InneReal, ISBN);
+    }
+
+
 
 
 
@@ -169,10 +226,7 @@ public class AdminController implements Initializable {
     private void createDVDClass() throws SQLException {
         String barcode_DVD = this.DVDBarcodeTextField.getText();
         DatabaseConnection databas6 = null;
-        if (databas6.checkBarcode_DVD(barcode_DVD)) {
-            System.out.println("BARCODE IS ALREADY IN USE");
-            return;
-        }
+
 
         String dvd_Namn = this.DVDNameTextFIeld.getText();
 
@@ -221,6 +275,57 @@ public class AdminController implements Initializable {
         databas6.insertDVD(barcode_DVD, dvd_Namn, dvd_Ar, dvd_Genre, dvd_Regissor, aldersgransReal, HyllaReal, Antal_Kopior_InneReal);
     }
 
+    @FXML
+    private void updateDVDClass() throws SQLException {
+        String barcodeDVD = this.DVDBarcodeTextField.getText();
+        String dvdNamn = this.DVDNameTextFIeld.getText();
+        int dvdAr = 0;
+        String dvdArReal = this.DVDRealeseYearTextField.getText();
+
+        try {
+            dvdAr = Integer.parseInt(dvdArReal);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        String dvdGenre = this.DVDGenreTextField.getText();
+        String dvdRegissor = this.DVDDirectorTextButton.getText();
+
+        int aldersgransReal = 0;
+        String aldersgrans = this.DVDAgeRestrictionTextField.getText();
+
+        try {
+            aldersgransReal = Integer.parseInt(aldersgrans);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int hyllaReal = 0;
+        String hylla = this.DVDShelfTesxtField.getText();
+
+        try {
+            hyllaReal = Integer.parseInt(hylla);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        int antalKopiorInneReal = 0;
+        String antalKopiorInne = this.DVDCopiesTextField.getText();
+
+        try {
+            antalKopiorInneReal = Integer.parseInt(antalKopiorInne);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid format, should be a number: ");
+            return;
+        }
+
+        DatabaseConnection database = new DatabaseConnection();
+        database.updateDVD(barcodeDVD, dvdNamn, dvdAr, dvdGenre, dvdRegissor, aldersgransReal, hyllaReal, antalKopiorInneReal);
+    }
+
 
 
 
@@ -230,13 +335,13 @@ public class AdminController implements Initializable {
 
         if (event.getSource() == addObjectButton) {
 
-            lblStatus.setText("Add Book");
+            lblStatus.setText("Edit Book");
             pnlStatus.setBackground(new Background(new BackgroundFill(Color.rgb(38, 63, 115), CornerRadii.EMPTY, Insets.EMPTY)));
             gpAddBook.toFront();
             //handle startPageButton
         } else if (event.getSource() == addDVDButton) {
 
-            lblStatus.setText("Add DVD");
+            lblStatus.setText("Edit DVD");
             pnlStatus.setBackground(new Background(new BackgroundFill(Color.rgb(45, 110, 80), CornerRadii.EMPTY, Insets.EMPTY)));
             gpAddDVD.toFront();
 

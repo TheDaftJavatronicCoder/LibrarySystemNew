@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="557.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="598.0" prefWidth="561.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.AdminController">
    <children>
       <VBox prefHeight="598.0" prefWidth="180.0" spacing="15.0" style="-fx-background-color: #263f73;">
          <children>
@@ -23,16 +23,17 @@
                </font>
             </Label>
             <Line endX="69.67156982421875" endY="1.1715729236602783" startX="-100.0" stroke="WHITE" strokeWidth="4.0" />
-            <Button fx:id="addDVDButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: transparent;" text="Add DVD" textFill="WHITE">
+            <Button fx:id="addDVDButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: transparent;" text="Edit DVD" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="addObjectButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="Add Book" textFill="WHITE">
+            <Button fx:id="addObjectButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="50.0" prefWidth="167.0" style="-fx-background-color: transparent;" text="Edit Book" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="15.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="182.0" style="-fx-background-color: transparent;" text="Delete object" />
             <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="184.0" style="-fx-background-color: transparent;" text="Overdue loans" textFill="WHITE">
                <font>
                   <Font name="Big Caslon Medium" size="14.0" />
@@ -45,7 +46,7 @@
             </Button>
          </children>
       </VBox>
-      <Pane fx:id="pnlStatus" layoutX="178.0" prefHeight="105.0" prefWidth="381.0" style="-fx-background-color: #263f73;">
+      <Pane fx:id="pnlStatus" layoutX="178.0" prefHeight="105.0" prefWidth="384.0" style="-fx-background-color: #263f73;">
          <children>
             <Label fx:id="lblStatus" alignment="CENTER" layoutX="79.0" layoutY="28.0" prefHeight="50.0" prefWidth="224.0" text="Welcome" textFill="WHITE">
                <font>
@@ -54,9 +55,9 @@
             </Label>
             <Line endX="-10.5" endY="168.0" layoutX="14.0" layoutY="7.0" startX="-10.5" startY="-7.0" stroke="WHITE" strokeWidth="4.0" />
          </children></Pane>
-      <VBox layoutX="192.0" layoutY="117.0" prefHeight="468.0" prefWidth="353.0">
+      <VBox layoutX="192.0" layoutY="117.0" prefHeight="476.0" prefWidth="363.0">
          <children>
-            <StackPane prefHeight="472.0" prefWidth="353.0">
+            <StackPane prefHeight="488.0" prefWidth="363.0">
                <children>
                   <GridPane fx:id="gpAddBook" prefHeight="306.0" prefWidth="216.0" style="-fx-background-color: #263f73;">
                      <columnConstraints>
@@ -66,7 +67,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                            <children>
                               <TextField fx:id="bookBarcodeTextField1" promptText="Insert barcode" />
                               <TextField fx:id="bookNameTextField1" promptText="Insert book name" />
@@ -74,17 +75,18 @@
                               <TextField fx:id="bookGenreTextField1" promptText="Insert genre" />
                               <TextField fx:id="bookCategoryTextField1" promptText="Insert category" />
                               <TextField fx:id="bookAuthorTextField1" promptText="Insert author" />
-                              <TextField fx:id="bookShelfTextField1" promptText="insert shelf" />
+                              <TextField fx:id="bookShelfTextField1" promptText="Insert shelf" />
                               <TextField fx:id="bookCopiesTextField1" promptText="Insert number of copies " />
                               <TextField fx:id="bookISBNTextField1" promptText="Insert ISBN" />
                               <Button fx:id="insertBookButton1" mnemonicParsing="false" onAction="#createBokClass" prefHeight="20.0" prefWidth="252.0" style="-fx-background-color: white;" text="Insert book" textFill="#263f73" />
+                              <Button fx:id="UpdateBookButton" mnemonicParsing="false" onAction="#updateBokClass" text="Button" />
                            </children>
                         </VBox>
                      </children>
                   </GridPane>
                   <GridPane fx:id="gpAddDVD" prefHeight="326.0" prefWidth="216.0" style="-fx-background-color: #263f73;">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="348.0000305175781" minWidth="10.0" prefWidth="348.0000305175781" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -100,10 +102,11 @@
                               <TextField fx:id="DVDAgeRestrictionTextField" promptText="Insert age restriction" />
                               <TextField fx:id="DVDShelfTesxtField" promptText="Insert shelf" />
                               <TextField fx:id="DVDCopiesTextField" promptText="Insert number of copies" />
-                              <Button fx:id="insertDVDButton" mnemonicParsing="false" onAction="#createDVDClass" style="-fx-background-color: White;" text="Insert DVD" textFill="#263f73">
+                              <Button fx:id="insertDVDButton" mnemonicParsing="false" onAction="#createDVDClass" prefHeight="31.0" prefWidth="86.0" style="-fx-background-color: White;" text="Insert DVD" textFill="#263f73">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Button>
+                              <Button fx:id="updateDVDButton" mnemonicParsing="false" onAction="#updateDVDClass" style="-fx-background-color: white;" text="Update DVD" textFill="#263f73" />
                            </children>
                         </VBox>
                      </children>
