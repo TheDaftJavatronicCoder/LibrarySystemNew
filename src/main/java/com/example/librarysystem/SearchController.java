@@ -107,6 +107,16 @@ public class SearchController {
         currentStage.setScene(myPagesScene);
     }
 
+    @FXML
+    protected void goToLogin() throws IOException {
+        LoanController.UpString(CompLoan);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) goToLoanBtn.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
+    }
+
 
     @FXML
     protected void ClickButton(ActionEvent e) throws SQLException {

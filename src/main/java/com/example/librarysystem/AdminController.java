@@ -372,7 +372,7 @@ public class AdminController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("deleteObject.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);
-        Stage currentStage = (Stage) switchToDeletePage.getScene().getWindow();
+        Stage currentStage = (Stage) addDVDButton.getScene().getWindow();
         currentStage.setScene(myPagesScene);
     }
 

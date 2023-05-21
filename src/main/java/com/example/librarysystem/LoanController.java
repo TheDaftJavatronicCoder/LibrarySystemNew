@@ -59,6 +59,9 @@ public class LoanController implements Initializable {
     @FXML
     private Button testBtn;
 
+    @FXML
+    private Label Info;
+
     private static String showLoan = "";
 
     private boolean wantReserve = false;
@@ -99,6 +102,7 @@ public class LoanController implements Initializable {
 
     @FXML
     public void ReserveItems(){
+        Info.setText("Du vill reservera istället");
         wantReserve = true;
     }
 
@@ -132,7 +136,11 @@ gpReturnLoan.toFront();
     }
 
     public void switchToCheckout() throws IOException, SQLException {
-        new DatabaseLoanHandling().addNewLoan(showLoan, wantReserve);
+        DatabaseLoanHandling db = new DatabaseLoanHandling();
+        if (db.GetLogin() == false){
+            Info.setText("Du måste logga in först");
+        }
+        db.addNewLoan(showLoan, wantReserve);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("checkout.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);

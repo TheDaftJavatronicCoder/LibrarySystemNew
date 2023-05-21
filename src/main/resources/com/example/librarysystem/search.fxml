@@ -16,7 +16,7 @@
          </children>
       </Pane>
       <Button fx:id="searchButton" graphicTextGap="0.0" layoutX="71.0" layoutY="260.0" mnemonicParsing="false" onAction="#SearchFundvd" prefHeight="28.0" prefWidth="187.0" style="-fx-background-color: #ffffff; -fx-border-color: #263F70;" text="Search DVD" textAlignment="CENTER" textFill="#263f70" textOverrun="WORD_ELLIPSIS" />
-      <Button fx:id="cancelButtonadmin" cancelButton="true" graphicTextGap="0.0" layoutX="71.0" layoutY="309.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="187.0" style="-fx-background-radius: 5em; -fx-border-color: #263F70; -fx-background-color: #ffffff;" text="Cancel" textAlignment="CENTER" textFill="#263f70" textOverrun="WORD_ELLIPSIS" />
+      <Button fx:id="cancelButtonadmin" cancelButton="true" graphicTextGap="0.0" layoutX="71.0" layoutY="309.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="28.0" prefWidth="187.0" style="-fx-background-radius: 5em; -fx-border-color: #263F70; -fx-background-color: #ffffff;" text="Login page" textAlignment="CENTER" textFill="#263f70" textOverrun="WORD_ELLIPSIS" />
       <TextField fx:id="searchTextfield" layoutX="71.0" layoutY="174.0" minWidth="-Infinity" prefHeight="26.0" prefWidth="187.0" promptText="Search..." snapToPixel="false" style="-fx-region-border: #263F70;" />
       <Label layoutX="71.0" layoutY="144.0" text="Search what you are looking for!" textAlignment="CENTER" textFill="#263f70">
          <font>

@@ -24,7 +24,7 @@ public class DatabaseConnection {
 
     protected boolean skipNextLoan = false;
 
-    protected boolean WantToReserve = false;
+    protected static boolean WantToReserve;
     protected int agelimitCurr;
 
 
@@ -42,6 +42,15 @@ public class DatabaseConnection {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static boolean GetLogin(){
+        if(kundIDcurr == 0){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 
