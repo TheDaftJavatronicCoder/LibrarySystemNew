@@ -76,7 +76,7 @@ public class DatabaseInsertHandling extends DatabaseConnection{
     }
 
     public void updateBok(String barcode_Bok, String bok_Namn, int bok_Ar, String bok_Genre, String kategori, String bok_Forfattare, int hylla, int antal_Kopior_Inne, String ISBN) throws SQLException {
-        String UPDATE_QUERY2 = "UPDATE your_table_name SET bok_Namn=?, bok_Ar=?, bok_Genre=?, kategori=?, bok_Forfattare=?, hylla=?, antal_Kopior_Inne=?, ISBN=? WHERE barcode_Bok=?";
+        String UPDATE_QUERY2 = "UPDATE bok SET bok_Namn=?, bok_Ar=?, bok_Genre=?, kategori=?, bok_Forfattare=?, hylla=?, antal_Kopior_Inne=?, ISBN=? WHERE barcode_Bok=?";
 
         PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY2);
         statement.setString(1, bok_Namn);
@@ -99,7 +99,7 @@ public class DatabaseInsertHandling extends DatabaseConnection{
     }
 
     public void updateDVD(String barcode_DVD, String dvd_Namn, int dvd_Ar, String dvd_Genre, String dvd_Regissor, int aldersgrans, int hylla, int Antal_Kopior_Inne) throws SQLException {
-        String UPDATE_QUERY3 = "UPDATE DVD SET dvd_Namn=?, dvd_Ar=?, dvd_Genre=?, dvd_Regissor=?, aldersgrans=?, hylla=?, antal_Kopior_Inne=? WHERE barcode_DVD=?";
+        String UPDATE_QUERY3 = "UPDATE dvd SET dvd_Namn=?, dvd_Ar=?, dvd_Genre=?, dvd_Regissor=?, aldersgrans=?, hylla=?, antal_Kopior_Inne=? WHERE barcode_DVD=?";
 
         PreparedStatement statement = conn.prepareStatement(UPDATE_QUERY3);
         statement.setString(1, dvd_Namn);
