@@ -47,7 +47,6 @@ public class SearchController {
 
     String Type;
 
-    private List<String> loanList = LoanList.getList();
 
 
     @FXML
