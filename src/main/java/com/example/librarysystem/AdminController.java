@@ -130,7 +130,7 @@ public class AdminController implements Initializable {
     private void createBokClass() throws SQLException {
         String barcode_Bok = this.bookBarcodeTextField1.getText();
         DatabaseInsertHandling databas5 = new DatabaseInsertHandling();
-        if (databas5.checkBarcode_Bok(barcode_Bok)) {
+        if (databas5.checkBarcode_Bok(barcode_Bok) || databas5.checkBarcode_DVD(barcode_Bok)) {
             System.out.println("BARCODE IS ALREADY IN USE");
             return;
         }
@@ -219,6 +219,15 @@ public class AdminController implements Initializable {
     }
 
 
+    @FXML
+    protected void goToReminder() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("reminderview.fxml"));
+        Parent myPagesParent = fxmlLoader.load();
+        Scene myPagesScene = new Scene(myPagesParent);
+        Stage currentStage = (Stage) addDVDButton.getScene().getWindow();
+        currentStage.setScene(myPagesScene);
+    }
+
 
 
 
@@ -227,7 +236,7 @@ public class AdminController implements Initializable {
         String barcode_DVD = this.DVDBarcodeTextField.getText();
         DatabaseInsertHandling databas6 = new DatabaseInsertHandling();
 
-        if (databas6.checkBarcode_DVD(barcode_DVD)) {
+        if (databas6.checkBarcode_Bok(barcode_DVD) || databas6.checkBarcode_DVD(barcode_DVD)) {
             System.out.println("BARCODE IS ALREADY IN USE");
             return;
         }
