@@ -61,7 +61,7 @@ public class LoanController implements Initializable {
 
     private static String showLoan = "";
 
-    private boolean wantReserve;
+    private boolean wantReserve = false;
 
 
 
