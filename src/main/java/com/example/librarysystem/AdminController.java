@@ -129,7 +129,7 @@ public class AdminController implements Initializable {
     @FXML
     private void createBokClass() throws SQLException {
         String barcode_Bok = this.bookBarcodeTextField1.getText();
-        DatabaseConnection databas5 = null;
+        DatabaseInsertHandling databas5 = new DatabaseInsertHandling();
         if (databas5.checkBarcode_Bok(barcode_Bok)) {
             System.out.println("BARCODE IS ALREADY IN USE");
             return;
@@ -172,7 +172,6 @@ public class AdminController implements Initializable {
             return;
         }
 
-        databas5 = new DatabaseConnection();
         databas5.insertBok(barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, HyllaReal, Antal_Kopior_InneReal, ISBN);
     }
     @FXML
@@ -215,7 +214,7 @@ public class AdminController implements Initializable {
 
         String ISBN = this.bookISBNTextField1.getText();
 
-        DatabaseConnection database = new DatabaseConnection();
+        DatabaseInsertHandling database = new DatabaseInsertHandling();
         database.updateBok(barcode_Bok, bok_Namn, bok_Ar, bok_Genre, kategori, bok_Forfattare, hyllaReal, antal_Kopior_InneReal, ISBN);
     }
 
@@ -226,8 +225,12 @@ public class AdminController implements Initializable {
     @FXML
     private void createDVDClass() throws SQLException {
         String barcode_DVD = this.DVDBarcodeTextField.getText();
-        DatabaseConnection databas6 = null;
+        DatabaseInsertHandling databas6 = new DatabaseInsertHandling();
 
+        if (databas6.checkBarcode_DVD(barcode_DVD)) {
+            System.out.println("BARCODE IS ALREADY IN USE");
+            return;
+        }
 
         String dvd_Namn = this.DVDNameTextFIeld.getText();
 
@@ -272,7 +275,6 @@ public class AdminController implements Initializable {
             return;
         }
 
-        databas6 = new DatabaseConnection();
         databas6.insertDVD(barcode_DVD, dvd_Namn, dvd_Ar, dvd_Genre, dvd_Regissor, aldersgransReal, HyllaReal, Antal_Kopior_InneReal);
     }
 
@@ -323,7 +325,7 @@ public class AdminController implements Initializable {
             return;
         }
 
-        DatabaseConnection database = new DatabaseConnection();
+        DatabaseInsertHandling database = new DatabaseInsertHandling();
         database.updateDVD(barcodeDVD, dvdNamn, dvdAr, dvdGenre, dvdRegissor, aldersgransReal, hyllaReal, antalKopiorInneReal);
     }
 

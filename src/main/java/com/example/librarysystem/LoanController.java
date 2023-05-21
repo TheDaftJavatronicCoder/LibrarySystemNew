@@ -132,7 +132,7 @@ gpReturnLoan.toFront();
     }
 
     public void switchToCheckout() throws IOException, SQLException {
-        new DatabaseConnection().addNewLoan(showLoan, wantReserve);
+        new DatabaseLoanHandling().addNewLoan(showLoan, wantReserve);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("checkout.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);

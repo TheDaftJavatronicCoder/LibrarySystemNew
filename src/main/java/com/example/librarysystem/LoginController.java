@@ -85,7 +85,7 @@ public class LoginController {
 
     @FXML
     private void createClass() throws SQLException {
-        DatabaseConnection databas3 = new DatabaseConnection();
+        DatabaseInsertHandling databas3 = new DatabaseInsertHandling();
         String firstname = this.firstnameTextField.getText();
         String lastname = this.lastnameTextField.getText();
         String email = this.emailTextField.getText();
@@ -121,9 +121,6 @@ public class LoginController {
         }
 
     }
-
-
-
 
     @FXML
     private void handleClicks(ActionEvent event)  {

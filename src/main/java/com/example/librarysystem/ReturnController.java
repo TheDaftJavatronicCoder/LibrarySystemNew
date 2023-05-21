@@ -25,8 +25,8 @@ public class ReturnController {
     @FXML
     private void returnButtonAction(){
         barcodeItem = TextFieldReturn.getText();
-        System.out.println();
-        DatabaseConnection dbcon = new DatabaseConnection();
+
+        DatabaseLoanHandling dbcon = new DatabaseLoanHandling();
         boolean isSuccess = dbcon.returnLoan(barcodeItem); // Call a method to perform the return operation and return a boolean indicating success or failure
 
         if (isSuccess) {

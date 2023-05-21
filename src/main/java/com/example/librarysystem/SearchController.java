@@ -54,7 +54,7 @@ public class SearchController {
     protected void SearchFuncbook(ActionEvent e) throws SQLException {
         TextFieldResult.getChildren().clear();
         String textFieldText = searchTextfield.getText();
-        String s1 = DatabaseConnection.searchBook(textFieldText);
+        String s1 = DatabaseSearchHandling.searchBook(textFieldText);
         String[] resultArray = s1.split("\n");
 
         for (String result : resultArray) {
@@ -77,7 +77,7 @@ public class SearchController {
     protected void SearchFundvd(ActionEvent e) throws SQLException {
         TextFieldResult.getChildren().clear();
         String textFieldText = searchTextfield.getText();
-        String s1 = DatabaseConnection.searchDVD(textFieldText);
+        String s1 = DatabaseSearchHandling.searchDVD(textFieldText);
         String[] resultArray = s1.split("\n");
 
         for (String result : resultArray) {
