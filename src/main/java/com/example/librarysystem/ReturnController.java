@@ -27,6 +27,11 @@ public class ReturnController {
         barcodeItem = TextFieldReturn.getText();
 
         DatabaseLoanHandling dbcon = new DatabaseLoanHandling();
+        if(dbcon.GetLogin()){
+        } else {
+            successfulLabel.setText("You need to login first!");
+            return;
+        }
         boolean isSuccess = dbcon.returnLoan(barcodeItem); // Call a method to perform the return operation and return a boolean indicating success or failure
 
         if (isSuccess) {

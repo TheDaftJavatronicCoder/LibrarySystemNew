@@ -42,7 +42,7 @@ public class StartPageController implements Initializable {
 
 
     public void onManageLoan() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("return.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);
         Stage currentStage = (Stage) manageLoanButton.getScene().getWindow();

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.StartPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.StartPageController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="724.0">
          <top>
@@ -42,7 +38,7 @@
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="manageLoanButton" layoutX="279.0" layoutY="221.0" mnemonicParsing="false" onAction="#onManageLoan" prefHeight="50.0" prefWidth="169.0" style="-fx-background-color: #263f73;" text="Manage loan" textFill="WHITE">
+                  <Button fx:id="manageLoanButton" layoutX="279.0" layoutY="221.0" mnemonicParsing="false" onAction="#onManageLoan" prefHeight="50.0" prefWidth="169.0" style="-fx-background-color: #263f73;" text="Return" textFill="WHITE">
                      <font>
                         <Font name="Big Caslon Medium" size="14.0" />
                      </font></Button>
