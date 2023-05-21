@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -16,6 +17,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 public class LoanController implements Initializable {
 
@@ -44,14 +48,61 @@ public class LoanController implements Initializable {
     private Button confirmLoanButton;
 
     @FXML
+    private TextArea loanArea;
+
+    @FXML
     private TextField usernameTextField;
 
     @FXML
     private TextField usernameTextField1;
+
+    @FXML
+    private Button testBtn;
+
+    private static String showLoan = "";
+
+    private boolean wantReserve;
+
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+//    public static void addDVDLoan(String pickedDVD) {
+//
+//        loanList.add("DVD: "+pickedDVD);
+//
+//    }
+//
+//    public static void addBookLoan(String pickedbook) {
+//
+//        loanList.add("Book: "+pickedbook);
+//
+//    }
+
+    @FXML
+    public void UpdateText() {
+
+        System.out.println(showLoan);
+        loanArea.setText(showLoan);
+    }
+
+    @FXML
+    public static void UpString(String lis) {
+
+        showLoan = lis;
+
+    }
+
+    @FXML
+    public void ReserveItems(){
+        wantReserve = true;
+    }
+
+
     @FXML
     private void handleClicks(ActionEvent event) {
 
@@ -80,11 +131,15 @@ gpReturnLoan.toFront();
         currentStage.setScene(myPagesScene);
     }
 
-    public void switchToCheckout() throws IOException {
+    public void switchToCheckout() throws IOException, SQLException {
+        new DatabaseConnection().addNewLoan(showLoan, wantReserve);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("checkout.fxml"));
         Parent myPagesParent = fxmlLoader.load();
         Scene myPagesScene = new Scene(myPagesParent);
-        Stage currentStage = (Stage) confirmLoanButton.getScene().getWindow();
+        Stage currentStage = (Stage) startPageButton2.getScene().getWindow();
         currentStage.setScene(myPagesScene);
     }
+
+
+
 }

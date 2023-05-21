@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+
 <AnchorPane prefHeight="435.0" prefWidth="638.0" style="-fx-background-color: #263f73;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.CheckoutController">
    <children>
       <VBox prefHeight="435.0" prefWidth="169.0" style="-fx-background-color: #263f73;">
@@ -33,6 +34,6 @@
       </Pane>
       <Button layoutX="526.0" layoutY="388.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" style="-fx-background-color: white;" text="Print recipt" textFill="#263f73" />
       <Button fx:id="GetInfo" layoutX="214.0" layoutY="388.0" mnemonicParsing="false" onAction="#getLoans" text="Get info" />
-      <TextArea fx:id="LoanDisplay" layoutX="204.0" layoutY="86.0" prefHeight="287.0" prefWidth="409.0" />
+      <TextArea fx:id="LoanDisplay" editable="false" layoutX="204.0" layoutY="86.0" prefHeight="287.0" prefWidth="409.0" />
    </children>
 </AnchorPane>

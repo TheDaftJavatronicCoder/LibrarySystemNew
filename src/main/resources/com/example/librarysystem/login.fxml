@@ -91,3 +91,5 @@
       <Label fx:id="usernameTaken1" layoutX="298.0" layoutY="60.0" prefHeight="40.0" prefWidth="250.0" textAlignment="CENTER" textFill="#ee7070" />
    </children>
 </AnchorPane>
+
+

@@ -61,6 +61,8 @@ public class LoginController {
     @FXML
     private Label usernameTaken1;
 
+    private boolean acceptNewAcc = true;
+
     public LoginController() {
     }
 
@@ -95,19 +97,28 @@ public class LoginController {
             agereal = Integer.parseInt(age);
         } catch (NumberFormatException e) {
             usernameTaken1.setText("Age is a number, put in a number!");
-            return;
+            acceptNewAcc = false;
         }
 
         String role = this.roleTextField.getText();
         String username = this.usernameTextField1.getText();
+
+        if (!role.equals("student") && !role.equals("teacher") && !role.equals("scientist")){
+            usernameTaken1.setText("Invalid role! Please choose from Student, Teacher, or Scientist. ");
+            acceptNewAcc = false;
+        }
+
         if (DatabaseConnection.checkUsername(username)){
             usernameTaken1.setText("Username is already taken!");
+            acceptNewAcc = false;
         }
 
         String pass = this.passwordTextField1.getText();
         System.out.println(firstname + " " + lastname);
+        if(acceptNewAcc){
+            databas3.insertPost(firstname, lastname, email, phoneNumber, address, agereal, role, username, pass);
+        }
 
-        databas3.insertPost(firstname, lastname, email, phoneNumber, address, agereal, role, username, pass);
     }
 
 

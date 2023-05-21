@@ -45,6 +45,7 @@ public class CheckoutController implements Initializable {
         Scene myPagesScene = new Scene(myPagesParent);
         Stage currentStage = (Stage) startPageButton5.getScene().getWindow();
         currentStage.setScene(myPagesScene);
+
     }
 
     @FXML
