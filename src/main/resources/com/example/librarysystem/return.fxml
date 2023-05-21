@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.librarysystem.ReturnController">
    <children>
       <AnchorPane prefHeight="151.0" prefWidth="600.0" style="-fx-background-color: #263F70;">
          <children>
@@ -23,7 +23,7 @@
          </children>
       </AnchorPane>
       <TextField layoutX="192.0" layoutY="219.0" prefHeight="84.0" prefWidth="216.0" />
-      <Button fx:id="returnButton" layoutX="273.0" layoutY="335.0" mnemonicParsing="false" style="-fx-background-color: #263F70;" text="Return" textAlignment="CENTER" textFill="WHITE" />
+      <Button fx:id="returnButton" layoutX="273.0" layoutY="335.0" mnemonicParsing="false" onAction="#returnButtonAction" style="-fx-background-color: #263F70;" text="Return" textAlignment="CENTER" textFill="WHITE" />
       <Label layoutX="251.0" layoutY="182.0" text="Ready to return?" textFill="#263f70">
          <font>
             <Font size="14.0" />
